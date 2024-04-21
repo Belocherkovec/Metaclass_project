@@ -1,0 +1,35 @@
+.text {
+  text-align: left;
+  font-weight: normal;
+  color: inherit;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* modificators */
+.title {
+  font-size: 44px;
+  line-height: 48px;
+  font-weight: bold;
+} 
+.button {
+  font-size: 18px;
+  line-height: 18px;
+}
+.p-20 {
+  font-size: 20px;
+  line-height: 24px;
+}
+.p-18 {
+  font-size: 18px;
+  line-height: 22px;
+}
+.p-16 {
+  font-size: 16px;
+  line-height: 20px;
+}
+.p-14 {
+  font-size: 14px;
+  line-height: 18px;
+}

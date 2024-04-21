@@ -24,6 +24,7 @@
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
+      "consts": ["consts/*"],
       "utils": ["utils/*"]
     }
   },

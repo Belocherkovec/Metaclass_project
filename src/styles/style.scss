@@ -1,0 +1,31 @@
+@import url(reset.scss);
+@import url(./Roboto/fonts.scss);
+
+html, body {
+  font-family: 'Roboto';
+  margin: 0;
+  padding: 0;
+}
+
+.content {
+  width: 1240px;
+  margin: 0 auto;
+  height: 100%;
+}
+
+:root {
+  --brand: #518581;
+  --brand-hover: #86aaa7;
+  --brand-active: #487773;
+  --brand-disabled: #D9D9D9;
+  --text-primary: #000000;
+  --text-hover: #AFADB5;
+  --text-accent: #518581;
+  --input-placeholder: #AFADB5;
+  --space-xl: 24px;
+  --space-l: 20px;
+  --space-m: 16px;
+  --space-s: 14px;
+  --space-xs: 12px;
+  --space-xxs: 8px;
+}

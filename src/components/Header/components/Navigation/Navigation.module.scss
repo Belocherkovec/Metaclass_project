@@ -1,0 +1,24 @@
+.navigation {
+  font-size: 18px;
+  display: flex;
+  column-gap: 48px;
+}
+.navigation > a {
+  text-decoration: none;
+}
+.navigation > a:visited {
+  color: currentColor;
+}
+.navigation > a.active {
+  font-weight: 500;
+  color: var(--brand);
+}
+.navigation > a.active::after {
+  content: "";
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+  display: block;
+  position: relative;
+  top: 31px;
+}
