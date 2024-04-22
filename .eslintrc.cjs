@@ -1,4 +1,4 @@
-const path = require('path');
+import path from 'path';
 
 module.exports = {
   root: true,
@@ -29,6 +29,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'import', 'prettier', 'react', 'react-hooks'],
   rules: {
     'no-console': 'warn',
+    'react/react-in-jsx-scope': 'off', // отключаем правило react/react-in-jsx-scope
     'import/order': [
       'error',
       {

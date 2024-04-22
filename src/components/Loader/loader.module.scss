@@ -1,0 +1,24 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader {
+  width: var(--size);
+  height: var(--size);
+  animation: spin 1s infinite linear;
+}
+
+.s {
+  --size: 24px;
+}
+.m {
+  --size: 48px;
+}
+.l {
+  --size: 60px;
+}

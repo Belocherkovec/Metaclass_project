@@ -19,6 +19,9 @@ const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, str
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    open: true, // автоматически открывать страницу в браузере
+  },
   plugins: [react()],
   resolve: {
     alias: parseTsConfigPaths(tsconfig.compilerOptions.paths),

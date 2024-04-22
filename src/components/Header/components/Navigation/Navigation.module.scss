@@ -11,7 +11,7 @@
 }
 .navigation > a.active {
   font-weight: 500;
-  color: var(--brand);
+  color: var(--color-accent);
 }
 .navigation > a.active::after {
   content: "";

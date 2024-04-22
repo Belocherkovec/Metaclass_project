@@ -1,0 +1,34 @@
+.button {
+  --bg-color: var(--color-accent);
+  background-color: var(--bg-color);
+
+  display: inline-flex;
+  align-items: center;
+  min-height: 52px;
+  padding: var(--space-s) var(--space-l);
+  border: none;
+  color: var(--color-white);
+  transition: background-color 0.3s ease;
+  flex-grow: 1;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.button:hover {
+  --bg-color: var(--color-accent-hover);
+}
+.button:active {
+  --bg-color: var(--color-accent-active);
+}
+.button:disabled {
+  pointer-events: none;
+  cursor: default;
+}
+.button .button__loader {
+  flex-shrink: 0;
+  margin-right: 8px;
+  color: currentColor;
+}
+
+.disabled {
+  --bg-color: var(--color-light-grey);
+}

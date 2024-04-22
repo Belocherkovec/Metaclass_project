@@ -1,18 +1,9 @@
-.text {
-  text-align: left;
-  font-weight: normal;
-  color: inherit;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* modificators */
+// views
 .title {
   font-size: 44px;
   line-height: 48px;
   font-weight: bold;
-} 
+}
 .button {
   font-size: 18px;
   line-height: 18px;
@@ -32,4 +23,45 @@
 .p-14 {
   font-size: 14px;
   line-height: 18px;
+}
+
+// aligns
+.left {
+  text-align: left;
+}
+.center {
+  text-align: center;
+}
+.right {
+  text-align: right;
+}
+
+// weights
+.normal {
+  font-weight: 400;
+}
+.medium {
+  font-weight: 500;
+}
+.bold {
+  font-weight: 700;
+}
+
+// colors
+.primary {
+  color: var(--color-primary);
+}
+.secondary {
+  color: var(--color-secondary);
+}
+.accent {
+  color: var(--color-accent);
+}
+
+.text_clamp {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: var(--lines-count);
 }
