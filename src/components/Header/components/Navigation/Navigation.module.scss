@@ -5,9 +5,13 @@
 }
 .navigation > a {
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 .navigation > a:visited {
   color: currentColor;
+}
+.navigation > a:hover {
+  color: var(--color-accent-hover);
 }
 .navigation > a.active {
   font-weight: 500;

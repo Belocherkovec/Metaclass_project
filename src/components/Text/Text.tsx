@@ -38,7 +38,7 @@ const Text: React.FC<TextProps> = ({
         styles[view],
         weight && styles[weight],
         color && styles[color],
-        maxLines ?? styles.text_clamp,
+        maxLines && styles.text_clamp,
       )}
       style={{ '--lines-count': maxLines } as React.CSSProperties}
     >
