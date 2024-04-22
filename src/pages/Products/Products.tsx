@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import Button from 'components/Button';
 import Api from 'config/Api';
 import Card from 'components/Card';
+import { Link } from 'react-router-dom';
 
 export interface IProduct {
   id: number;
@@ -59,14 +60,15 @@ const Products = () => {
       <div className={styles.products__list}>
         {data &&
           data.map((e) => (
-            <Card
-              key={e.id}
-              image={e.images[0].replace(/^\["|"\]$/g, '')}
-              title={e.title}
-              subtitle={e.description}
-              contentSlot={`$${e.price}`}
-              actionSlot={<Button>Add to card</Button>}
-            />
+            <Link to={`/products/${e.id}`} key={e.id}>
+              <Card
+                image={e.images[0].replace(/^\["|"\]$/g, '')}
+                title={e.title}
+                subtitle={e.description}
+                contentSlot={`$${e.price}`}
+                actionSlot={<Button>Add to card</Button>}
+              />
+            </Link>
           ))}
       </div>
     </div>

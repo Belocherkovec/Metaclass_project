@@ -5,6 +5,7 @@ import Products from 'pages/Products';
 import About from 'pages/About';
 import Categories from 'pages/Categories';
 import Header from 'components/Header';
+import ProductPage from 'pages/ProductPage';
 
 import './App.module.scss';
 import 'styles/style.scss';
@@ -17,10 +18,16 @@ const App = () => {
         <div className="content">
           {/* Можно ли вынести логику навигации из App, в отдельный компонент, например <Content />. Как лучше это сделать? */}
           <Routes>
-            <Route path="/" element={<Products />} />
+            <Route path="/products">
+              {/* Отображается при переходе на /products */}
+              <Route index element={<Products />} />
+
+              {/* Отображается при переходе на /products/:id */}
+              <Route path=":id" element={<ProductPage />} />
+            </Route>
             <Route path="/categories" element={<Categories />} />
             <Route path="/about" element={<About />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/products" replace />} />
           </Routes>
         </div>
       </main>
