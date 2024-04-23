@@ -10,7 +10,7 @@ export type LoaderProps = {
 };
 
 const Loader: React.FC<LoaderProps> = ({ className, size = 'l' }) => {
-  return <SpinnerIcon className={cn(className, styles.loader, styles[size])} color="accent" />;
+  return <SpinnerIcon className={cn(styles.loader, styles[size], className)} color="accent" />;
 };
 
 export default Loader;

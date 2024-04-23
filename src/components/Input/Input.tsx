@@ -24,7 +24,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
 
     return (
-      <label className={cn(className, styles.input, disabled && styles.disabled)}>
+      <label className={cn(styles.input, disabled && styles.disabled, className)}>
         <input
           className={styles.input__field}
           type="text"

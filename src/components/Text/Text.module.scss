@@ -1,3 +1,5 @@
+@import "styles/mixins";
+
 // views
 .title {
   font-size: 44px;
@@ -59,9 +61,5 @@
 }
 
 .text_clamp {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: var(--lines-count);
+  @include clamp;
 }

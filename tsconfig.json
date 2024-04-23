@@ -18,6 +18,8 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
 
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+
     "baseUrl": "src",
     "paths": {
       "pages": ["pages/*"],
@@ -28,7 +30,7 @@
       "utils": ["utils/*"]
     }
   },
-  "include": ["styles.d.ts", "src"],
+  "include": ["src/styles.d.ts", "src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

@@ -33,12 +33,12 @@ const Text: React.FC<TextProps> = ({
   return (
     <Tag
       className={cn(
-        className,
         align && styles[align],
         styles[view],
         weight && styles[weight],
         color && styles[color],
         maxLines && styles.text_clamp,
+        className,
       )}
       style={{ '--lines-count': maxLines } as React.CSSProperties}
     >

@@ -2,7 +2,7 @@
   height: var(--header-height);
   background-color: var(--color-white);
   border-bottom: 2px solid #f3f3f3;
-  & .content {
+  .content {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -10,10 +10,6 @@
 }
 
 .navbar {
-  & * {
-    margin-right: 24px;
-  }
-  & *:last-child {
-    margin-right: 0;
-  }
+  display: flex;
+  column-gap: 24px;
 }

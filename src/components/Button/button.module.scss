@@ -12,21 +12,22 @@
   flex-grow: 1;
   flex-shrink: 0;
   cursor: pointer;
-}
-.button:hover {
-  --bg-color: var(--color-accent-hover);
-}
-.button:active {
-  --bg-color: var(--color-accent-active);
-}
-.button:disabled {
-  pointer-events: none;
-  cursor: default;
-}
-.button .button__loader {
-  flex-shrink: 0;
-  margin-right: 8px;
-  color: currentColor;
+
+  &:hover {
+    --bg-color: var(--color-accent-hover);
+  }
+  &:active {
+    --bg-color: var(--color-accent-active);
+  }
+  &:disabled {
+    pointer-events: none;
+    cursor: default;
+  }
+  &__loader {
+    flex-shrink: 0;
+    margin-right: 8px;
+    color: currentColor;
+  }
 }
 
 .disabled {

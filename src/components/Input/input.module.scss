@@ -18,33 +18,33 @@
   &:focus-within {
     border-color: var(--color-accent);
   }
+
+  &__field {
+    display: block;
+    flex-grow: 1;
+    height: 100%;
+    padding: 0;
+    border: none;
+    color: var(--text-color);
+    background: none;
+    appearance: none;
+    outline: none;
+    transition: color 0.3s ease;
+
+    &::placeholder {
+      color: var(--color-secondary);
+      opacity: 1;
+    }
+  }
+
+  &__after {
+    display: flex;
+    flex-shrink: 0;
+    margin-left: var(--space-xxs);
+  }
 }
 
 .disabled {
   --text-color: rgba(var(--color-black), 0.2);
   pointer-events: none;
-}
-
-.input__field {
-  display: block;
-  flex-grow: 1;
-  height: 100%;
-  padding: 0;
-  border: none;
-  color: var(--text-color);
-  background: none;
-  appearance: none;
-  outline: none;
-  transition: color 0.3s ease;
-}
-
-.input__field::placeholder {
-  color: var(--color-secondary);
-  opacity: 1;
-}
-
-.input__after {
-  display: flex;
-  flex-shrink: 0;
-  margin-left: var(--space-xxs);
 }
