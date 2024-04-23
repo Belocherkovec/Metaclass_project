@@ -66,7 +66,7 @@ const Products = () => {
                 title={e.title}
                 subtitle={e.description}
                 contentSlot={`$${e.price}`}
-                actionSlot={<Button>Add to card</Button>}
+                actionSlot={<Button disabled>Add to card</Button>}
               />
             </Link>
           ))}
