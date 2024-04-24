@@ -1,23 +1,24 @@
+@import "styles/variables.scss";
+
 .button {
-  --bg-color: var(--color-accent);
-  background-color: var(--bg-color);
+  background-color: $color-accent;
 
   display: inline-flex;
   align-items: center;
   min-height: 52px;
-  padding: var(--space-s) var(--space-l);
+  padding: $space-s $space-l;
   border: none;
-  color: var(--color-white);
+  color: $color-white;
   transition: background-color 0.3s ease;
   flex-grow: 1;
   flex-shrink: 0;
   cursor: pointer;
 
   &:hover {
-    --bg-color: var(--color-accent-hover);
+    background-color: $color-accent-hover;
   }
   &:active {
-    --bg-color: var(--color-accent-active);
+    background-color: $color-accent-active;
   }
   &:disabled {
     pointer-events: none;
@@ -31,5 +32,5 @@
 }
 
 .disabled {
-  --bg-color: var(--color-light-grey);
+  background-color: $color-light-grey;
 }

@@ -60,7 +60,7 @@ const Products = () => {
       <div className={styles.products__list}>
         {data &&
           data.map((e) => (
-            <Link to={`/products/${e.id}`} key={e.id}>
+            <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
               <Card
                 image={e.images[0].replace(/^\["|"\]$/g, '')}
                 title={e.title}

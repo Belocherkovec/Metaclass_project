@@ -1,15 +1,17 @@
+@import "styles/variables.scss";
+
 .card {
   $card-width: 360px;
 
   width: 100%;
   max-width: $card-width;
-  background-color: var(--color-white);
+  background-color: $color-white;
   transition: box-shadow 0.3s ease;
   overflow: hidden;
   cursor: pointer;
 
   &:hover {
-    box-shadow: var(--shadow);
+    box-shadow: $shadow;
   }
 
   &__image {
@@ -19,11 +21,11 @@
   }
 
   &__body {
-    padding: 48px var(--space-xs);
+    padding: 48px $space-xs;
   }
 
   &__caption {
-    margin-bottom: var(--space-xxs);
+    margin-bottom: $space-xxs;
   }
 
   &__title {
@@ -32,17 +34,17 @@
 
   &__subtitle {
     height: 60px;
-    margin-top: var(--space-xxs);
+    margin-top: $space-xxs;
   }
 
   &__footer {
     display: flex;
     align-items: center;
-    margin-top: var(--space-l);
+    margin-top: $space-l;
   }
 
   &__action {
-    padding-left: var(--space-xxs);
+    padding-left: $space-xxs;
     margin-left: auto;
   }
 }

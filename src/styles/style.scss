@@ -1,5 +1,5 @@
-@import url(reset.scss);
-@import url(variables.scss);
+@import "./variables.scss";
+@import "./reset.scss";
 @import url(./Roboto/fonts.scss);
 
 html,
@@ -16,6 +16,6 @@ body {
 }
 
 .content_bg {
-  background: var(--color-bg);
-  min-height: calc(100vh - var(--header-height));
+  background: $color-bg;
+  min-height: calc(100vh - $header-height);
 }

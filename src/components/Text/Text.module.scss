@@ -1,4 +1,5 @@
 @import "styles/mixins";
+@import "styles/variables.scss";
 
 // views
 .title {
@@ -51,13 +52,13 @@
 
 // colors
 .primary {
-  color: var(--color-primary);
+  color: $color-primary;
 }
 .secondary {
-  color: var(--color-secondary);
+  color: $color-secondary;
 }
 .accent {
-  color: var(--color-accent);
+  color: $color-accent;
 }
 
 .text_clamp {

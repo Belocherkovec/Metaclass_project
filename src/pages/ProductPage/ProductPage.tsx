@@ -64,7 +64,7 @@ const ProductPage = () => {
       <div className={styles['related-list']}>
         {relatedData &&
           relatedData.map((e) => (
-            <Link to={`/products/${e.id}`} key={e.id}>
+            <Link to={`/products/${e.id}`} key={e.id} className={styles['related-list__card']}>
               <Card
                 image={e.images[0].replace(/^\["|"\]$/g, '')}
                 title={e.title}

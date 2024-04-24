@@ -11,13 +11,10 @@ type QueryParams = Record<string, any>;
 
 type GetMethod = (url: string, urlParams?: UrlParams, queryParams?: QueryParams) => Promise<AxiosResponse>;
 
-export default class BaseApi {
+export default abstract class BaseApi {
   private server: AxiosInstance;
 
   constructor({ baseURL, headers = { 'Access-Control-Allow-Origin': '*' } }: ServerConfig) {
-    if (this.constructor === BaseApi) {
-      throw new Error("Abstract classes can't be instantiated.");
-    }
     this.server = axios.create({
       baseURL,
       headers,

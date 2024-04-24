@@ -1,9 +1,32 @@
+@import "styles/variables.scss";
+
 .products {
   padding: 100px 0;
-  & .filter {
+  .filter {
     max-width: 300px;
-    margin-top: var(--space-xl);
+    margin-top: $space-xl;
     margin-bottom: 48px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    column-gap: $space-xl;
+  }
+
+  &__list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+  }
+
+  &__card {
+    &:nth-child(3n + 2) {
+      justify-self: center;
+    }
+    &:nth-child(3n + 3) {
+      justify-self: end;
+    }
   }
 }
 
@@ -16,7 +39,7 @@
 .search {
   display: flex;
   justify-content: space-between;
-  column-gap: var(--space-xl);
+  column-gap: $space-xl;
   margin-top: 48px;
 }
 
@@ -24,24 +47,4 @@
   font-size: 32px;
   line-height: 48px;
   display: inline-block;
-}
-
-.products__info {
-  display: flex;
-  align-items: center;
-  column-gap: var(--space-xl);
-}
-
-.products__list {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  row-gap: 30px;
-}
-
-.products__list > *:nth-child(3n + 2) {
-  justify-self: center;
-}
-
-.products__list > *:nth-child(3n + 3) {
-  justify-self: end;
 }

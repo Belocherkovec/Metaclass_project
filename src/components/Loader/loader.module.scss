@@ -6,19 +6,23 @@
     transform: rotate(360deg);
   }
 }
+@mixin loader-size($size: 60px) {
+  width: $size;
+  height: $size;
+}
 
 .loader {
-  width: var(--size);
-  height: var(--size);
-  animation: spin 1s infinite linear;
-}
+  &.s {
+    @include loader-size(24px);
+  }
 
-.s {
-  --size: 24px;
-}
-.m {
-  --size: 48px;
-}
-.l {
-  --size: 60px;
+  &.m {
+    @include loader-size(48px);
+  }
+
+  &.l {
+    @include loader-size(60px);
+  }
+
+  animation: spin 1s infinite linear;
 }

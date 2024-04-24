@@ -1,28 +1,30 @@
+@import "styles/variables.scss";
+
 .navigation {
   font-size: 18px;
   display: flex;
   column-gap: 48px;
-}
-.navigation > a {
-  text-decoration: none;
-  transition: color 0.3s ease;
-}
-.navigation > a:visited {
-  color: currentColor;
-}
-.navigation > a:hover {
-  color: var(--color-accent-hover);
-}
-.navigation > a.active {
-  font-weight: 500;
-  color: var(--color-accent);
-}
-.navigation > a.active::after {
-  content: "";
-  width: 100%;
-  height: 2px;
-  background: currentColor;
-  display: block;
-  position: relative;
-  top: 31px;
+  > a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    &:visited {
+      color: currentColor;
+    }
+    &:hover {
+      color: $color-accent-hover;
+    }
+    &.active {
+      font-weight: 500;
+      color: $color-accent;
+      &::after {
+        content: "";
+        width: 100%;
+        height: 2px;
+        background: currentColor;
+        display: block;
+        position: relative;
+        top: 31px;
+      }
+    }
+  }
 }
