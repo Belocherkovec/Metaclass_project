@@ -8,14 +8,3 @@ body {
   margin: 0;
   padding: 0;
 }
-
-.content {
-  width: 1240px;
-  margin: 0 auto;
-  height: 100%;
-}
-
-.content_bg {
-  background: $color-bg;
-  min-height: calc(100vh - $header-height);
-}
