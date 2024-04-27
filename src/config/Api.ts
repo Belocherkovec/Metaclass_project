@@ -1,11 +1,14 @@
 import BaseApi, { ServerConfig } from './baseApi';
 
+export type UrlParams = string[];
+export type QueryParams = { [key: string]: string };
+
 class Api extends BaseApi {
   constructor({ baseURL, headers }: ServerConfig) {
     super({ baseURL, headers });
   }
-  public async getProducts() {
-    return this.getRequest('api/v1/products');
+  public async getProducts(urlParams?: UrlParams, queryParams?: QueryParams) {
+    return this.getRequest('api/v1/products', urlParams, queryParams);
   }
 }
 

@@ -28,7 +28,8 @@
       "config": ["config/*"],
       "styles": ["styles/*"],
       "consts": ["consts/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "entities": ["entities/*"]
     }
   },
   "include": ["src/styles.d.ts", "src"],

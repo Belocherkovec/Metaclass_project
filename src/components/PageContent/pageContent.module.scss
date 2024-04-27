@@ -1,4 +1,4 @@
-// @import "styles/variables.scss";
+@import "styles/variables.scss";
 
 .content {
   width: 1240px;
@@ -6,7 +6,7 @@
   height: 100%;
 }
 
-// .wrapper {
-//   // background: $color-bg;
-//   // min-height: calc(100vh - $header-height);
-// }
+.wrapper {
+  background: $color-bg;
+  min-height: calc(100vh - $header-height);
+}

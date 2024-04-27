@@ -1,7 +1,8 @@
 import { useParams, Link } from 'react-router-dom';
-import { IProduct } from 'pages/Products';
+import { IProduct } from 'entities/product/types.ts';
 import { useState, useEffect } from 'react';
 import Api from 'config/Api';
+import { routerUrls } from 'config/Routes';
 
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import Text from 'components/Text';
@@ -14,21 +15,22 @@ import styles from './productPage.module.scss';
 function getRelated(data: IProduct[], relatedCount: number) {
   const createRandomNumber = (n: number): number => Math.floor(Math.random() * n);
 
-  return new Array(relatedCount).fill('').map((_) => data[createRandomNumber(data.length)]);
+  return new Array(relatedCount).fill('').map(() => data[createRandomNumber(data.length)]);
 }
 
 const ProductPage = () => {
   const { id } = useParams() as { id: string };
-  const [data, setData] = useState<IProduct[] | null>(null);
-  const [currentProductData, setCurrentProductData] = useState<IProduct | null>(null);
+  const [data, setData] = useState<IProduct | null>(null);
   const [relatedData, setRelatedData] = useState<IProduct[] | null>(null);
 
   useEffect(() => {
-    Api.getProducts().then((res) => {
+    Api.getProducts([id]).then((res) => {
       setData(res.data);
-      setCurrentProductData(res.data.filter((e: IProduct) => e.id === +id)[0]);
+    });
+    Api.getProducts().then((res) => {
       setRelatedData(getRelated(res.data, 3));
     });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [id]);
 
   return (
@@ -37,22 +39,18 @@ const ProductPage = () => {
         <ArrowRightIcon />
         <Text view="p-20">Назад</Text>
       </Link>
-      {currentProductData && (
+      {data && (
         <div className={styles.info}>
-          <Image
-            className={styles.image}
-            src={currentProductData.images[0].replace(/^\["|"\]$/g, '')}
-            alt="product card"
-          />
+          <Image className={styles.image} src={data.images[0].replace(/^\["|"\]$/g, '')} alt="product card" />
           <div className={styles.description}>
-            <Text tag="h1" view="title" className={styles.info__title}>
-              {currentProductData.title}
+            <Text tag="h1" view="title">
+              {data.title}
             </Text>
             <Text tag="p" view="p-20" color="secondary">
-              {currentProductData.description}
+              {data.description}
             </Text>
-            <Text tag="h1" view="title" className={styles.info__title}>
-              {`$${currentProductData.price}`}
+            <Text tag="h1" view="title">
+              {`$${data.price}`}
             </Text>
             <Button>Buy Now</Button>
           </div>
@@ -64,7 +62,7 @@ const ProductPage = () => {
       <div className={styles['related-list']}>
         {relatedData &&
           relatedData.map((e) => (
-            <Link to={`/products/${e.id}`} key={e.id} className={styles['related-list__card']}>
+            <Link to={routerUrls.product.create(e.id)} key={e.id} className={styles['related-list__card']}>
               <Card
                 image={e.images[0].replace(/^\["|"\]$/g, '')}
                 title={e.title}

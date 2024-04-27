@@ -7,7 +7,7 @@ const App = () => {
   return (
     <>
       <Header />
-      <PageContent>
+      <PageContent isHasBg>
         <Outlet />
       </PageContent>
     </>
