@@ -6,16 +6,23 @@ import Button from 'components/Button';
 import Api from 'config/Api';
 import Card from 'components/Card';
 import { Link } from 'react-router-dom';
-import { IProduct } from 'entities/product/types.ts';
+import { ICategory, IProduct } from 'entities/product/types.ts';
+import MultiDropdown, { Option } from 'components/MultiDropDown';
 
 const Products = () => {
   const [data, setData] = useState<IProduct[] | null>(null);
   const [search, setSearch] = useState('');
-  const [filterOptions, setFilterOptions] = useState('');
+  const [filterOptions, setFilterOptions] = useState<Option[]>([]);
+  const [filterValues, setFilterValues] = useState<Option[]>([]);
 
   useEffect(() => {
     Api.getProducts().then((res) => setData(res.data));
+    Api.getCategories().then((res) =>
+      setFilterOptions(res.data.map((o: ICategory) => ({ key: o.name, value: o.name }))),
+    );
   }, []);
+
+  console.log(data);
 
   return (
     <div className={styles.products}>
@@ -30,12 +37,14 @@ const Products = () => {
         <Input value={search} onChange={setSearch} placeholder="Search product" />
         <Button>Find now</Button>
       </div>
-      <Input
+      <MultiDropdown
+        options={filterOptions}
+        value={filterValues}
+        onChange={setFilterValues}
+        getTitle={(values: Option[]) =>
+          values.length === 0 ? 'Выберите категории' : values.map(({ value }) => value).join(', ')
+        }
         className={styles.filter}
-        value={filterOptions}
-        onChange={setFilterOptions}
-        placeholder="Filter"
-        afterSlot
       />
       <div className={styles.products__info}>
         <Text tag="h2" className={styles.total}>

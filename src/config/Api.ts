@@ -10,6 +10,9 @@ class Api extends BaseApi {
   public async getProducts(urlParams?: UrlParams, queryParams?: QueryParams) {
     return this.getRequest('api/v1/products', urlParams, queryParams);
   }
+  public async getCategories(urlParams?: UrlParams, queryParams?: QueryParams) {
+    return this.getRequest('api/v1/categories', urlParams, queryParams);
+  }
 }
 
 const URLS = {
