@@ -5,23 +5,22 @@ import { useEffect, useState } from 'react';
 import Button from 'components/Button';
 import Api from 'config/Api';
 import Card from 'components/Card';
-import { Link, useLocation, useParams, useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ICategory, IProduct } from 'entities/product/types.ts';
 import MultiDropdown, { Option } from 'components/MultiDropDown';
+import Pagination from 'components/Pagination';
 
 const Products = () => {
-  const location = useLocation();
   const [searchStr, setSearchStr] = useState('');
-  const [filteredData, setFilteredData] = useState<IProduct[] | null>(null);
-  const [data, setData] = useState<IProduct[] | null>(null);
+  const [data, setData] = useState<IProduct[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filteredData, setFilteredData] = useState<IProduct[]>([]);
   const [filterOptions, setFilterOptions] = useState<Option[]>([]);
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
 
   useEffect(() => {
-    const searchParams = new URLSearchParams(location.search);
-
     Api.getProducts().then((res) => {
       setData(res.data);
       setFilteredData(res.data);
@@ -32,6 +31,7 @@ const Products = () => {
 
         const categories = searchParams.get('categories')?.split(',');
         setFilterValues(newState.filter((o) => categories?.includes(o.value)));
+        setSearchStr(searchParams.get('search') || '');
 
         return newState;
       });
@@ -39,27 +39,45 @@ const Products = () => {
   }, []);
 
   useEffect(() => {
-    if (!data) return;
-
     const categoriesList = filterValues.map(({ value }) => value);
-    if (categoriesList.length) {
-      setFilteredData(data?.filter((r) => categoriesList.includes(r.category.name)));
-    } else {
-      setFilteredData([...data]);
-    }
-  }, [filterValues, data]);
+    setFilteredData((prevState) => {
+      let newState = data;
+
+      if (categoriesList.length) {
+        newState = newState.filter((r) => categoriesList.includes(r.category.name));
+      }
+
+      if (searchStr) {
+        newState = newState.filter(
+          (r) => r.title.toLowerCase().includes(searchStr) || r.description.toLowerCase().includes(searchStr),
+        );
+      }
+
+      return newState;
+    });
+  }, [data, searchParams]);
 
   function searchSumbitHandler() {
-    setSearchParams({ search: searchStr });
+    if (searchStr.length) {
+      searchParams.set('search', searchStr);
+    } else {
+      searchParams.delete('search');
+    }
+    setSearchParams(searchParams);
   }
 
   function filterChangeHandler(newValue: Option[]) {
     setFilterValues(newValue);
-    setSearchParams({ categories: newValue.map((o) => o.value).join(',') });
+    if (newValue.length) {
+      searchParams.set('categories', newValue.map((o) => o.value).join(','));
+    } else {
+      searchParams.delete('categories');
+    }
+    setSearchParams(searchParams);
   }
 
   return (
-    <div className={styles.products}>
+    <section className={styles.products}>
       <Text tag="h1" view="title" align="center">
         Products
       </Text>
@@ -85,24 +103,30 @@ const Products = () => {
           Total Product
         </Text>
         <Text tag="span" view="p-20" color="accent" weight="bold">
-          {filteredData?.length || 0}
+          {filteredData.length || 0}
         </Text>
       </div>
       <div className={styles.products__list}>
-        {filteredData &&
-          filteredData.map((e) => (
-            <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
-              <Card
-                image={e.images[0].replace(/^\["|"\]$/g, '')}
-                title={e.title}
-                subtitle={e.description}
-                contentSlot={`$${e.price}`}
-                actionSlot={<Button>Add to card</Button>}
-              />
-            </Link>
-          ))}
+        {filteredData.map((e) => (
+          <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
+            <Card
+              image={e.images[0].replace(/^\["|"\]$/g, '')}
+              title={e.title}
+              subtitle={e.description}
+              contentSlot={`$${e.price}`}
+              actionSlot={<Button>Add to card</Button>}
+            />
+          </Link>
+        ))}
       </div>
-    </div>
+      <Pagination
+        className={styles.pagination}
+        currentPage={2}
+        itemsLimit={10}
+        itemsCount={data.length}
+        handler={setCurrentPage}
+      />
+    </section>
   );
 };
 

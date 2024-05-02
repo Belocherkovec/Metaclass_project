@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  justify-content: center;
+  &__button {
+    border: none;
+    background: transparent;
+    display: grid;
+    place-content: center;
+  }
+  &__button:last-child {
+    transform: rotate(180deg);
+  }
+  &__control {
+    display: flex;
+    // justify-content: center;
+    column-gap: 8px;
+  }
+}
