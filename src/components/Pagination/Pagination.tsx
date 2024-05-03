@@ -20,15 +20,43 @@ const Pagination: React.FC<PaginationProps<any>> = ({
   currentPage,
   handler,
 }) => {
-  const pagesLimit = Math.round(itemsCount / itemsLimit);
+  const pagesLimit = Math.ceil(itemsCount / itemsLimit);
+  const [isLeftDisabled, isRightDisabled] = [currentPage === 1, currentPage === pagesLimit];
+
+  function onClickHandler(e: React.MouseEvent<HTMLElement>) {
+    const target = e.target as HTMLElement;
+    console.log(target.className);
+  }
 
   return (
-    <div className={cn(styles.pagination, className)}>
-      <button className={styles.pagination__button}>
+    <div className={cn(styles.pagination, className)} onClick={onClickHandler}>
+      <button className={styles.pagination__button} disabled={isLeftDisabled}>
         <ArrowRightIcon />
       </button>
       <ul className={styles.pagination__control}>
-        {currentPage + 2 < pagesLimit ? <>{currentPage - 1 > 0 && <li>{currentPage - 1}</li>}</> : <></>}
+        {currentPage + 2 < pagesLimit ? (
+          <>
+            {currentPage > 1 && <li className={styles.pagination__item}>{currentPage - 1}</li>}
+            <li className={styles.pagination__item_active}>{currentPage}</li>
+            <li className={styles.pagination__item}>{currentPage + 1}</li>
+            {currentPage === 1 && <li className={styles.pagination__item}>{currentPage + 2}</li>}
+            <li>...</li>
+            <li className={styles.pagination__item}>{pagesLimit}</li>
+          </>
+        ) : (
+          <>
+            {currentPage === pagesLimit - 1 && <li className={styles.pagination__item}>{currentPage - 1}</li>}
+            {currentPage === pagesLimit && (
+              <>
+                <li className={styles.pagination__item}>{currentPage - 2}</li>
+                <li className={styles.pagination__item}>{currentPage - 1}</li>
+              </>
+            )}
+            <li className={styles.pagination__item_active}>{currentPage}</li>
+            {currentPage + 1 <= pagesLimit && <li className={styles.pagination__item}>{currentPage + 1}</li>}
+            {currentPage + 2 === pagesLimit && <li className={styles.pagination__item}>{currentPage + 2}</li>}
+          </>
+        )}
         {/* {currentPage - 1 > 0 && <li>{currentPage - 1}</li>}
         <li>{currentPage}</li>
         {currentPage + 1 <= pagesLimit && currentPage + 1}
@@ -39,7 +67,7 @@ const Pagination: React.FC<PaginationProps<any>> = ({
           </>
         )} */}
       </ul>
-      <button className={styles.pagination__button}>
+      <button className={styles.pagination__button} disabled={isRightDisabled}>
         <ArrowRightIcon />
       </button>
     </div>

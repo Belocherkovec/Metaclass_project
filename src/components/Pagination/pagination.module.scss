@@ -1,3 +1,5 @@
+@import "styles/variables.scss";
+
 .pagination {
   display: flex;
   justify-content: center;
@@ -6,6 +8,10 @@
     background: transparent;
     display: grid;
     place-content: center;
+    cursor: pointer;
+    svg {
+      pointer-events: none;
+    }
   }
   &__button:last-child {
     transform: rotate(180deg);
@@ -14,5 +20,14 @@
     display: flex;
     // justify-content: center;
     column-gap: 8px;
+    align-items: center;
+  }
+  &__item {
+    cursor: pointer;
+    &_active {
+      background-color: $color-accent;
+      padding: 6px 12px;
+      color: $color-white;
+    }
   }
 }

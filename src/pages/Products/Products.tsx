@@ -121,7 +121,7 @@ const Products = () => {
       </div>
       <Pagination
         className={styles.pagination}
-        currentPage={2}
+        currentPage={4}
         itemsLimit={10}
         itemsCount={data.length}
         handler={setCurrentPage}
