@@ -11,6 +11,7 @@ import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
 
 const Products = () => {
+  const limitPerPage = 9;
   const [searchStr, setSearchStr] = useState('');
   const [data, setData] = useState<IProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,7 +56,18 @@ const Products = () => {
 
       return newState;
     });
+    setCurrentPage(1);
   }, [data, searchParams]);
+
+  /* Из-за этого куска кода, не работает переключение страниц в пагинации (все время сбрасывается на 1), я искренне не могу понять, почему??? */
+  // useEffect(() => {
+  //   if (filteredData.length > limitPerPage) {
+  //     searchParams.set('page', currentPage.toString());
+  //   } else {
+  //     searchParams.delete('page');
+  //   }
+  //   setSearchParams(searchParams);
+  // }, [currentPage, filteredData]);
 
   function searchSumbitHandler() {
     if (searchStr.length) {
@@ -107,7 +119,7 @@ const Products = () => {
         </Text>
       </div>
       <div className={styles.products__list}>
-        {filteredData.map((e) => (
+        {filteredData.slice(currentPage * limitPerPage - limitPerPage, currentPage * limitPerPage).map((e) => (
           <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
             <Card
               image={e.images[0].replace(/^\["|"\]$/g, '')}
@@ -119,13 +131,14 @@ const Products = () => {
           </Link>
         ))}
       </div>
-      <Pagination
-        className={styles.pagination}
-        currentPage={4}
-        itemsLimit={10}
-        itemsCount={data.length}
-        handler={setCurrentPage}
-      />
+      {filteredData.length > limitPerPage && (
+        <Pagination
+          className={styles.pagination}
+          count={Math.ceil(filteredData.length / limitPerPage)}
+          currentPage={currentPage}
+          onChange={setCurrentPage}
+        />
+      )}
     </section>
   );
 };

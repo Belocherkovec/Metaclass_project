@@ -13,7 +13,7 @@
       pointer-events: none;
     }
   }
-  &__button:last-child {
+  &__button_right {
     transform: rotate(180deg);
   }
   &__control {
@@ -24,10 +24,13 @@
   }
   &__item {
     cursor: pointer;
+    padding: 6px 12px;
     &_active {
       background-color: $color-accent;
-      padding: 6px 12px;
       color: $color-white;
+    }
+    &_inactive {
+      pointer-events: none;
     }
   }
 }

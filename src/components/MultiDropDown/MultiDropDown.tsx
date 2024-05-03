@@ -4,6 +4,7 @@ import cn from 'classnames';
 import Input from 'components/Input';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import Text from 'components/Text';
+import CloseIcon from 'components/icons/CloseIcon';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */

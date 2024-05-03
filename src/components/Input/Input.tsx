@@ -34,7 +34,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           {...props}
         />
-        {afterSlot && <ArrowDown color="secondary" />}
+        {afterSlot}
       </label>
     );
   },
