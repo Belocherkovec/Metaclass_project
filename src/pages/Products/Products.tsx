@@ -106,7 +106,7 @@ const Products = () => {
         value={filterValues}
         onChange={filterChangeHandler}
         getTitle={(values: Option[]) =>
-          values.length === 0 ? 'Выберите категории' : values.map(({ value }) => value).join(', ')
+          values.length === 0 ? 'Select categories' : values.map(({ value }) => value).join(', ')
         }
         className={styles.filter}
       />
