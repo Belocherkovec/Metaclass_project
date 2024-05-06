@@ -29,7 +29,8 @@
       "styles": ["styles/*"],
       "consts": ["consts/*"],
       "utils": ["utils/*"],
-      "entities": ["entities/*"]
+      "entities": ["entities/*"],
+      "store": ["store/*"]
     }
   },
   "include": ["src/styles.d.ts", "src"],

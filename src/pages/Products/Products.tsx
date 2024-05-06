@@ -9,6 +9,8 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { ICategory, IProduct } from 'entities/product/types.ts';
 import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
+import { observer } from 'mobx-react-lite';
+import productStore from 'store/ProductStore';
 
 const Products = () => {
   const limitPerPage = 9;
@@ -20,6 +22,11 @@ const Products = () => {
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
   const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    productStore.updateProducts();
+    console.log(productStore.products[0].title);
+  }, []);
 
   useEffect(() => {
     Api.getProducts().then((res) => {
@@ -143,4 +150,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default observer(Products);
