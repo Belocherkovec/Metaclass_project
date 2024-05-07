@@ -8,15 +8,15 @@ class Api extends BaseApi {
     super({ baseURL, headers });
   }
   public async getProducts(urlParams?: UrlParams, queryParams?: QueryParams) {
-    return this.getRequest('api/v1/products', urlParams, queryParams);
+    return this.getRequest('products', urlParams, queryParams);
   }
   public async getCategories(urlParams?: UrlParams, queryParams?: QueryParams) {
-    return this.getRequest('api/v1/categories', urlParams, queryParams);
+    return this.getRequest('categories', urlParams, queryParams);
   }
 }
 
 const URLS = {
-  Platzi: 'https://api.escuelajs.co/',
+  Platzi: 'https://api.escuelajs.co/api/v1/',
 };
 
 export default new Api({ baseURL: URLS.Platzi });

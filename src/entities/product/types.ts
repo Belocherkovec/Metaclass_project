@@ -10,9 +10,3 @@ export interface IProduct {
   };
   images: string[];
 }
-
-export interface ICategory {
-  id: number;
-  name: string;
-  image: string;
-}

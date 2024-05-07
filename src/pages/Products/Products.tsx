@@ -6,65 +6,65 @@ import Button from 'components/Button';
 import Api from 'config/Api';
 import Card from 'components/Card';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ICategory, IProduct } from 'entities/product/types.ts';
+import { IProduct } from 'entities/product/types';
+import { ICategory } from 'entities/category/types';
 import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
 import { observer } from 'mobx-react-lite';
 import productStore from 'store/ProductStore';
 
 const Products = () => {
-  const limitPerPage = 9;
+  // const limitPerPage = 9;
   const [searchStr, setSearchStr] = useState('');
-  const [data, setData] = useState<IProduct[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [filteredData, setFilteredData] = useState<IProduct[]>([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  // const [data, setData] = useState<IProduct[]>([]);
+  // const [currentPage, setCurrentPage] = useState(1);
+  // const [filteredData, setFilteredData] = useState<IProduct[]>([]);
   const [filterOptions, setFilterOptions] = useState<Option[]>([]);
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
-  const [searchParams, setSearchParams] = useSearchParams();
-
   useEffect(() => {
     productStore.updateProducts();
-    console.log(productStore.products[0].title);
-  }, []);
-
-  useEffect(() => {
-    Api.getProducts().then((res) => {
-      setData(res.data);
-      setFilteredData(res.data);
-    });
     Api.getCategories().then((res) => {
       setFilterOptions(() => {
         const newState: Option[] = res.data.map((o: ICategory) => ({ key: o.name, value: o.name }));
 
         const categories = searchParams.get('categories')?.split(',');
-        setFilterValues(newState.filter((o) => categories?.includes(o.value)));
-        setSearchStr(searchParams.get('search') || '');
+        // setFilterValues(newState.filter((o) => categories?.includes(o.value)));
+        // setSearchStr(searchParams.get('search') || '');
 
         return newState;
       });
     });
   }, []);
 
-  useEffect(() => {
-    const categoriesList = filterValues.map(({ value }) => value);
-    setFilteredData((prevState) => {
-      let newState = data;
+  // useEffect(() => {
+  //   Api.getProducts().then((res) => {
+  //     setData(res.data);
+  //     setFilteredData(res.data);
+  //   });
+  // }, []);
 
-      if (categoriesList.length) {
-        newState = newState.filter((r) => categoriesList.includes(r.category.name));
-      }
+  // useEffect(() => {
+  //   const categoriesList = filterValues.map(({ value }) => value);
+  //   setFilteredData((prevState) => {
+  //     let newState = data;
 
-      if (searchStr) {
-        newState = newState.filter(
-          (r) => r.title.toLowerCase().includes(searchStr) || r.description.toLowerCase().includes(searchStr),
-        );
-      }
+  //     if (categoriesList.length) {
+  //       newState = newState.filter((r) => categoriesList.includes(r.category.name));
+  //     }
 
-      return newState;
-    });
-    setCurrentPage(1);
-  }, [data, searchParams]);
+  //     if (searchStr) {
+  //       newState = newState.filter(
+  //         (r) => r.title.toLowerCase().includes(searchStr) || r.description.toLowerCase().includes(searchStr),
+  //       );
+  //     }
+
+  //     return newState;
+  //   });
+  //   setCurrentPage(1);
+  // }, [data, searchParams]);
 
   /* Из-за этого куска кода, не работает переключение страниц в пагинации (все время сбрасывается на 1), я искренне не могу понять, почему??? */
   // useEffect(() => {
@@ -122,14 +122,14 @@ const Products = () => {
           Total Product
         </Text>
         <Text tag="span" view="p-20" color="accent" weight="bold">
-          {filteredData.length || 0}
+          {productStore.products.length || 0}
         </Text>
       </div>
       <div className={styles.products__list}>
-        {filteredData.slice(currentPage * limitPerPage - limitPerPage, currentPage * limitPerPage).map((e) => (
+        {productStore.products.map((e) => (
           <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
             <Card
-              image={e.images[0].replace(/^\["|"\]$/g, '')}
+              image={e.images[0]}
               title={e.title}
               subtitle={e.description}
               contentSlot={`$${e.price}`}
@@ -138,14 +138,14 @@ const Products = () => {
           </Link>
         ))}
       </div>
-      {filteredData.length > limitPerPage && (
+      {/* {filteredData.length > limitPerPage && (
         <Pagination
           className={styles.pagination}
           count={Math.ceil(filteredData.length / limitPerPage)}
           currentPage={currentPage}
           onChange={setCurrentPage}
         />
-      )}
+      )} */}
     </section>
   );
 };
