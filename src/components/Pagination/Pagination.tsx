@@ -19,7 +19,7 @@ const Pagination: React.FC<PaginationProps> = ({ className, total }) => {
   useEffect(() => {
     pagination.total = total;
     console.log(pagination.total);
-  }, []);
+  }, [total]);
 
   return (
     <div className={cn(styles.pagination, className)}>
