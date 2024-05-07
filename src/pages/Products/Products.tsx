@@ -14,29 +14,30 @@ import { observer } from 'mobx-react-lite';
 import productStore from 'store/ProductStore';
 
 const Products = () => {
-  // const limitPerPage = 9;
+  const limitPerPage = 9;
   const [searchStr, setSearchStr] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
 
-  // const [data, setData] = useState<IProduct[]>([]);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [filteredData, setFilteredData] = useState<IProduct[]>([]);
   const [filterOptions, setFilterOptions] = useState<Option[]>([]);
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
   useEffect(() => {
     productStore.updateProducts();
+    setSearchStr(searchParams.get('search') || '');
+
     Api.getCategories().then((res) => {
       setFilterOptions(() => {
         const newState: Option[] = res.data.map((o: ICategory) => ({ key: o.name, value: o.name }));
 
+        // set active categories
         const categories = searchParams.get('categories')?.split(',');
-        // setFilterValues(newState.filter((o) => categories?.includes(o.value)));
-        // setSearchStr(searchParams.get('search') || '');
+        setFilterValues(newState.filter((o) => categories?.includes(o.value)));
 
         return newState;
       });
     });
+
+    return () => productStore.reset();
   }, []);
 
   // useEffect(() => {
@@ -66,16 +67,6 @@ const Products = () => {
   //   setCurrentPage(1);
   // }, [data, searchParams]);
 
-  /* Из-за этого куска кода, не работает переключение страниц в пагинации (все время сбрасывается на 1), я искренне не могу понять, почему??? */
-  // useEffect(() => {
-  //   if (filteredData.length > limitPerPage) {
-  //     searchParams.set('page', currentPage.toString());
-  //   } else {
-  //     searchParams.delete('page');
-  //   }
-  //   setSearchParams(searchParams);
-  // }, [currentPage, filteredData]);
-
   function searchSumbitHandler() {
     if (searchStr.length) {
       searchParams.set('search', searchStr);
@@ -100,7 +91,7 @@ const Products = () => {
       <Text tag="h1" view="title" align="center">
         Products
       </Text>
-      <Text view="p-20" color="secondary" align="center" className={`${styles.secondary_text}`}>
+      <Text view="p-20" color="secondary" align="center" className={styles.secondary_text}>
         We display products based on the latest products we have, if you want to see our old products please enter the
         name of the item
       </Text>
@@ -130,6 +121,7 @@ const Products = () => {
           <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
             <Card
               image={e.images[0]}
+              captionSlot={e.category.name}
               title={e.title}
               subtitle={e.description}
               contentSlot={`$${e.price}`}
@@ -146,6 +138,7 @@ const Products = () => {
           onChange={setCurrentPage}
         />
       )} */}
+      {<Pagination className={styles.pagination} total={Math.ceil(productStore.products.length / limitPerPage)} />}
     </section>
   );
 };

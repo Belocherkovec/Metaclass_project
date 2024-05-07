@@ -4,6 +4,12 @@ import Api from 'config/Api';
 
 type PrivateFields = '_products';
 
+export interface IProductParams {
+  categories: string[];
+  title: string;
+  page: number;
+}
+
 class ProductStore {
   private _products: IProduct[] = [];
 
@@ -15,17 +21,27 @@ class ProductStore {
     });
   }
 
-  updateProducts = async () => {
+  public updateProducts = async () => {
     try {
       const res = await Api.getProducts();
-      this._products = res.data;
+      this.products = res.data;
     } catch (error) {
       console.error('Error on get products:', error);
     }
   };
 
-  get products(): IProduct[] {
+  // public filterProducts = async (params) => {};
+
+  public get products(): IProduct[] {
     return this._products;
+  }
+
+  public set products(value: IProduct[]) {
+    this._products = value;
+  }
+
+  public reset() {
+    this.products = [];
   }
 }
 

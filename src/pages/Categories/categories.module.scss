@@ -1,0 +1,19 @@
+.categories {
+  padding: 100px 0;
+
+  &__content {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 30px;
+  }
+
+  &__card {
+    &:nth-child(3n + 2) {
+      justify-self: center;
+    }
+    &:nth-child(3n + 3) {
+      justify-self: end;
+    }
+  }
+}

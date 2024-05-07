@@ -13,7 +13,7 @@ export type CardProps = {
   /** Заголовок карточки */
   title: React.ReactNode;
   /** Описание карточки */
-  subtitle: React.ReactNode;
+  subtitle?: React.ReactNode;
   /** Содержимое карточки (футер/боковая часть), может быть пустым */
   contentSlot?: React.ReactNode;
   /** Клик на карточку */
@@ -46,9 +46,11 @@ const Card: React.FC<CardProps> = ({
         <Text tag="h4" className={styles.card__title} view="p-20" weight="medium" color="primary" maxLines={2}>
           {title}
         </Text>
-        <Text className={styles.card__subtitle} view="p-16" color="secondary" maxLines={3}>
-          {subtitle}
-        </Text>
+        {subtitle && (
+          <Text className={styles.card__subtitle} view="p-16" color="secondary" maxLines={3}>
+            {subtitle}
+          </Text>
+        )}
         <div className={styles.card__footer}>
           {contentSlot && (
             <Text view="p-18" weight="bold">
