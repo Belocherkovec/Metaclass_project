@@ -1,5 +1,5 @@
 import Text from 'components/Text';
-import styles, { total } from './Products.module.scss';
+import styles from './Products.module.scss';
 import Input from 'components/Input';
 import { useEffect, useState } from 'react';
 import Button from 'components/Button';
@@ -72,7 +72,7 @@ const Products = () => {
 
   useEffect(() => {
     update();
-  }, [filterValues]);
+  }, [filterValues, page]);
 
   return (
     <section className={styles.products}>
