@@ -1,12 +1,11 @@
 import Text from 'components/Text';
-import styles from './Products.module.scss';
+import styles, { total } from './Products.module.scss';
 import Input from 'components/Input';
 import { useEffect, useState } from 'react';
 import Button from 'components/Button';
 import Api from 'config/Api';
 import Card from 'components/Card';
 import { Link, useSearchParams } from 'react-router-dom';
-import { IProduct } from 'entities/product/types';
 import { ICategory } from 'entities/category/types';
 import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
@@ -15,57 +14,39 @@ import productStore from 'store/ProductStore';
 
 const Products = () => {
   const limitPerPage = 9;
-  const [searchStr, setSearchStr] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [filterOptions, setFilterOptions] = useState<Option[]>([]);
+
+  const [page, setPage] = useState(1);
+  const [searchStr, setSearchStr] = useState('');
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
   useEffect(() => {
-    productStore.updateProducts();
+    // set search str
     setSearchStr(searchParams.get('search') || '');
 
+    // get categories
     Api.getCategories().then((res) => {
       setFilterOptions(() => {
-        const newState: Option[] = res.data.map((o: ICategory) => ({ key: o.name, value: o.name }));
+        const newState: Option[] = res.data.map((o: ICategory) => ({ id: o.id, key: o.name, value: o.name }));
 
         // set active categories
         const categories = searchParams.get('categories')?.split(',');
-        setFilterValues(newState.filter((o) => categories?.includes(o.value)));
+        setFilterValues(newState.filter((o) => categories?.includes(o.id.toString())));
 
         return newState;
       });
     });
 
+    update();
+
     return () => productStore.reset();
   }, []);
 
-  // useEffect(() => {
-  //   Api.getProducts().then((res) => {
-  //     setData(res.data);
-  //     setFilteredData(res.data);
-  //   });
-  // }, []);
-
-  // useEffect(() => {
-  //   const categoriesList = filterValues.map(({ value }) => value);
-  //   setFilteredData((prevState) => {
-  //     let newState = data;
-
-  //     if (categoriesList.length) {
-  //       newState = newState.filter((r) => categoriesList.includes(r.category.name));
-  //     }
-
-  //     if (searchStr) {
-  //       newState = newState.filter(
-  //         (r) => r.title.toLowerCase().includes(searchStr) || r.description.toLowerCase().includes(searchStr),
-  //       );
-  //     }
-
-  //     return newState;
-  //   });
-  //   setCurrentPage(1);
-  // }, [data, searchParams]);
+  function update() {
+    productStore.updateTotal({ title: searchStr, categoryId: filterValues[0]?.id });
+    productStore.filterProducts({ limit: limitPerPage, page: page, title: searchStr, categoryId: filterValues[0]?.id });
+  }
 
   function searchSumbitHandler() {
     if (searchStr.length) {
@@ -74,17 +55,24 @@ const Products = () => {
       searchParams.delete('search');
     }
     setSearchParams(searchParams);
+    setPage(1);
+    update();
   }
 
   function filterChangeHandler(newValue: Option[]) {
     setFilterValues(newValue);
     if (newValue.length) {
-      searchParams.set('categories', newValue.map((o) => o.value).join(','));
+      searchParams.set('categories', newValue.map((o) => o.id).join(','));
     } else {
       searchParams.delete('categories');
     }
     setSearchParams(searchParams);
+    setPage(1);
   }
+
+  useEffect(() => {
+    update();
+  }, [filterValues]);
 
   return (
     <section className={styles.products}>
@@ -104,7 +92,7 @@ const Products = () => {
         value={filterValues}
         onChange={filterChangeHandler}
         getTitle={(values: Option[]) =>
-          values.length === 0 ? 'Select categories' : values.map(({ value }) => value).join(', ')
+          values.length === 0 ? 'Select category' : values.map(({ value }) => value).join(', ')
         }
         className={styles.filter}
       />
@@ -130,15 +118,13 @@ const Products = () => {
           </Link>
         ))}
       </div>
-      {/* {filteredData.length > limitPerPage && (
+      {productStore.total > limitPerPage && (
         <Pagination
           className={styles.pagination}
-          count={Math.ceil(filteredData.length / limitPerPage)}
-          currentPage={currentPage}
-          onChange={setCurrentPage}
+          total={Math.ceil(productStore.total / limitPerPage)}
+          onChange={setPage}
         />
-      )} */}
-      {<Pagination className={styles.pagination} total={Math.ceil(productStore.products.length / limitPerPage)} />}
+      )}
     </section>
   );
 };

@@ -4,22 +4,43 @@ import styles from './pagination.module.scss';
 import { observer } from 'mobx-react-lite';
 import PaginationStore from 'store/PaginationStore';
 import { useEffect } from 'react';
+import { useLocalStore } from 'utils/useLocalStore';
+import { useSearchParams } from 'react-router-dom';
 
 export type PaginationProps = {
   className?: string;
   total: number;
-  // onChange: (value: number) => void;
+  onChange?: (value: number) => void;
 };
 
-const Pagination: React.FC<PaginationProps> = ({ className, total }) => {
-  const pagination = new PaginationStore();
+const Pagination: React.FC<PaginationProps> = ({ className, total, onChange }) => {
+  const pagination = useLocalStore(() => new PaginationStore());
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  pagination.total = total;
+  // component unmounting
+  useEffect(() => {
+    const initialPage = searchParams.get('page');
+    if (initialPage) {
+      pagination.page = +initialPage;
+    }
+    return () => {
+      searchParams.delete('page');
+      setSearchParams(searchParams);
+    };
+  }, []);
 
+  // total change watch
   useEffect(() => {
     pagination.total = total;
-    console.log(pagination.total);
   }, [total]);
+
+  useEffect(() => {
+    searchParams.set('page', pagination.page.toString());
+    setSearchParams(searchParams);
+    if (onChange) {
+      onChange(pagination.page);
+    }
+  }, [pagination.page]);
 
   return (
     <div className={cn(styles.pagination, className)}>

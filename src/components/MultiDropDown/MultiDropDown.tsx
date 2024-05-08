@@ -4,9 +4,9 @@ import cn from 'classnames';
 import Input from 'components/Input';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import Text from 'components/Text';
-import CloseIcon from 'components/icons/CloseIcon';
 
 export type Option = {
+  id: number;
   /** Ключ варианта, используется для отправки на бек/использования в коде */
   key: string;
   /** Значение варианта, отображается пользователю */
@@ -72,10 +72,18 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({ className, options, value
     (option: Option) => {
       if (disabled) return;
 
+      /* multiChooise */
+      // if (selectedKeysSet.has(option.key)) {
+      //   onChange([...value].filter(({ key }) => key !== option.key));
+      // } else {
+      //   onChange([...value, option]);
+      // }
+
+      /* one choice */
       if (selectedKeysSet.has(option.key)) {
-        onChange([...value].filter(({ key }) => key !== option.key));
+        onChange([]);
       } else {
-        onChange([...value, option]);
+        onChange([option]);
       }
 
       ref.current?.focus();
@@ -104,7 +112,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({ className, options, value
                 styles.multidropdown__option,
                 selectedKeysSet.has(option.key) && styles.multidropdown__option_selected,
               )}
-              key={option.key}
+              key={option.key + option.id}
               onClick={() => {
                 onSelect(option);
               }}

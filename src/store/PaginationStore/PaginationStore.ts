@@ -1,14 +1,15 @@
 import { action, computed, makeObservable, observable } from 'mobx';
+import { ILocalStore } from 'utils/useLocalStore.ts';
 
 type PrivateFields = '_page' | '_total';
 
 export type PaginationElement = {
   content: string | number;
-  isActive: boolean;
-  isDisabled: boolean;
+  isActive?: boolean;
+  isDisabled?: boolean;
 };
 
-class PaginationStore {
+class PaginationStore implements ILocalStore {
   private _page: number = 1;
   private _total: number = 1;
 
@@ -19,6 +20,8 @@ class PaginationStore {
       incrementPage: action,
       decrementPage: action,
       goToPage: action,
+      total: computed,
+      page: computed,
     });
   }
 
@@ -34,7 +37,6 @@ class PaginationStore {
 
   public set total(value: number) {
     this._total = value;
-    console.log(this._total);
   }
   public get total(): number {
     return this._total;
@@ -48,38 +50,37 @@ class PaginationStore {
   }
 
   public get pagination(): PaginationElement[] {
-    console.log('pagination start', this._page, this._total);
     const result: PaginationElement[] = [];
 
     if (this._total < 6) {
       for (let i = 1; i <= this._total; i++) {
-        result.push({ content: i, isActive: i === this._page, isDisabled: false });
+        result.push({ content: i, isActive: i === this._page });
       }
     } else {
-      result.push({ content: this._page, isActive: true, isDisabled: false });
+      result.push({ content: this._page, isActive: true });
       if (this._total - this._page < 3) {
         for (let i = this._page; i < this._total; i++) {
-          result.push({ content: i + 1, isActive: false, isDisabled: false });
+          result.push({ content: i + 1 });
         }
         for (let i = 1; result.length < 5; i++) {
-          result.unshift({ content: this._page - i, isActive: false, isDisabled: false });
+          result.unshift({ content: this._page - i });
         }
       } else {
-        result.push({ content: this._page + 1, isActive: false, isDisabled: false });
+        result.push({ content: this._page + 1 });
         if (this._page > 1) {
-          result.unshift({ content: this._page - 1, isActive: false, isDisabled: false });
+          result.unshift({ content: this._page - 1 });
         } else {
-          result.push({ content: this._page + 2, isActive: false, isDisabled: false });
+          result.push({ content: this._page + 2 });
         }
-        result.push({ content: '...', isActive: false, isDisabled: true });
-        result.push({ content: this._total, isActive: false, isDisabled: false });
+        result.push({ content: '...', isDisabled: true });
+        result.push({ content: this._total });
       }
     }
 
     return result;
   }
 
-  public clear() {
+  public destroy() {
     this._page = 1;
     this._total = 1;
   }
