@@ -1,7 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import "./style.css";
+import styles from "./styles.module.scss";
+import sun from "./sun.png";
+
+type Props = {
+  children: React.ReactNode;
+}
+
+const Button: React.FC<Props> = ({children}: Props) =>{
+  return <div>{children}</div>
+}
 
 document.addEventListener("DOMContentLoaded", () => {
   // Проверяем, существует ли элемент с id "root" в DOM
@@ -15,7 +24,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const root = ReactDOM.createRoot(rootElement);
 
   // Рендерим компонент React
-  root.render(<div className="title">React приложение</div>);
+  root.render(<div className={styles.title}>React приложение <img src={sun}><Button children="aboba" /></img></div>);
 });
 
 if (module.hot) {
