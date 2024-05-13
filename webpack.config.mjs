@@ -1,9 +1,11 @@
 import path from 'path';
+import webpack from 'webpack';
 import { fileURLToPath } from 'url';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TsCheckerPlugin from 'fork-ts-checker-webpack-plugin';
+import tsconfig from './tsconfig.json' assert { type: 'json' };
 
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/
 const __filename = fileURLToPath(import.meta.url);
@@ -11,8 +13,21 @@ const __dirname = path.dirname(__filename);
 
 const buildPath = path.resolve(__dirname, 'dist');
 const srcPath = path.resolve(__dirname, 'src');
+const publicPath = path.resolve(__dirname, 'public');
 
 const isProd = process.env.NODE_ENV === 'production';
+
+const parseTsConfigPaths = (paths) => {
+  const webpackConfigAliases = {};
+
+  Object.entries(paths).forEach(([alias, paths]) => {
+    const aliasPath = paths[0].replace(/[^a-zA-Z]/g, '');
+
+    webpackConfigAliases[alias] = path.join(srcPath, aliasPath);
+  });
+
+  return webpackConfigAliases;
+};
 
 const getSettingsForStyles = (withModules = false) => {
   return [
@@ -37,11 +52,18 @@ const getSettingsForStyles = (withModules = false) => {
         },
       },
     },
-    'sass-loader',
+    {
+      loader: 'sass-loader',
+      options: {
+        sassOptions: {
+          indentedSyntax: false, // Установите это значение в false, чтобы использовать SCSS синтаксис
+        },
+      },
+    },
   ];
 };
 
-module.exports = {
+export default {
   entry: path.join(srcPath, 'index.tsx'),
   target: !isProd ? 'web' : 'browserslist',
   output: {
@@ -50,8 +72,11 @@ module.exports = {
   },
   mode: 'development',
   plugins: [
+    new webpack.ProvidePlugin({
+      React: 'react',
+    }),
     new HtmlWebpackPlugin({
-      template: path.resolve(srcPath, 'index.html'), // путь до нашего шаблона
+      template: path.resolve(publicPath, 'index.html'), // путь до нашего шаблона
     }),
     !isProd && new ReactRefreshWebpackPlugin(),
     isProd &&
@@ -60,6 +85,10 @@ module.exports = {
       }),
     new TsCheckerPlugin(),
   ].filter(Boolean),
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    alias: parseTsConfigPaths(tsconfig.compilerOptions.paths),
+  },
   module: {
     rules: [
       {

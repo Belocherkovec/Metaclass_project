@@ -33,7 +33,7 @@
       "store": ["store/*"]
     }
   },
-  "include": ["src/styles.d.ts", "src"],
+  "include": ["src/declaration.d.ts", "src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

@@ -2,7 +2,6 @@ import { forwardRef, useCallback } from 'react';
 import cn from 'classnames';
 
 import styles from './input.module.scss';
-import ArrowDown from 'components/icons/ArrowDownIcon';
 
 export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
   /** Значение поля */
