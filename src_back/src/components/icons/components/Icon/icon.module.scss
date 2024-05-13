@@ -1,0 +1,18 @@
+@import "styles/variables.scss";
+
+.icon {
+  display: inline-block;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+// colors
+.primary {
+  color: $color-primary;
+}
+.secondary {
+  color: $color-secondary;
+}
+.accent {
+  color: $color-accent;
+}

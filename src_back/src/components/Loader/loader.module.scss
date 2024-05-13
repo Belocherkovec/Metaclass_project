@@ -1,0 +1,28 @@
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@mixin loader-size($size: 60px) {
+  width: $size;
+  height: $size;
+}
+
+.loader {
+  &.s {
+    @include loader-size(24px);
+  }
+
+  &.m {
+    @include loader-size(48px);
+  }
+
+  &.l {
+    @include loader-size(60px);
+  }
+
+  animation: spin 1s infinite linear;
+}

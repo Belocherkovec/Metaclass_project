@@ -1,0 +1,38 @@
+@import "styles/variables.scss";
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  &__button {
+    border: none;
+    background: transparent;
+    display: grid;
+    place-content: center;
+    cursor: pointer;
+    svg {
+      pointer-events: none;
+    }
+  }
+  &__button_right {
+    transform: rotate(180deg);
+  }
+  &__control {
+    display: flex;
+    // justify-content: center;
+    column-gap: 8px;
+    align-items: center;
+  }
+  &__item {
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    padding: 6px 12px;
+    &_active {
+      background-color: $color-accent;
+      color: $color-white;
+    }
+    &_inactive {
+      pointer-events: none;
+    }
+  }
+}

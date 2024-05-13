@@ -1,19 +1,42 @@
 {
   "compilerOptions": {
-	"noEmit": true,
-	"allowJs": true,
-	"sourceMap": true,
-	"strict": true,
-	"strictNullChecks": true,
-	"skipLibCheck": true,
-	"module": "es6",
-	"target": "es6",
-	"moduleResolution": "node",
-    "jsx": "react",
-	"esModuleInterop": true,
-	"allowSyntheticDefaultImports": true
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+
+    "plugins": [{ "name": "typescript-plugin-css-modules" }],
+
+    "baseUrl": "src",
+    "paths": {
+      "App": ["App/*"],
+      "pages": ["pages/*"],
+      "components": ["components/*"],
+      "config": ["config/*"],
+      "styles": ["styles/*"],
+      "consts": ["consts/*"],
+      "utils": ["utils/*"],
+      "entities": ["entities/*"],
+      "store": ["store/*"]
+    }
   },
- 
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "include": ["src/styles.d.ts", "src"],
+  "references": [
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }

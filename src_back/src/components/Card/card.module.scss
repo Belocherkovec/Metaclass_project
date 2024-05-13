@@ -1,0 +1,50 @@
+@import "styles/variables.scss";
+
+.card {
+  $card-width: 360px;
+
+  width: 100%;
+  max-width: $card-width;
+  background-color: $color-white;
+  transition: box-shadow 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+
+  &:hover {
+    box-shadow: $shadow;
+  }
+
+  &__image {
+    width: $card-width;
+    height: $card-width;
+    object-fit: cover;
+  }
+
+  &__body {
+    padding: 48px $space-xs;
+  }
+
+  &__caption {
+    margin-bottom: $space-xxs;
+  }
+
+  &__title {
+    height: 48px;
+  }
+
+  &__subtitle {
+    height: 60px;
+    margin-top: $space-xxs;
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    margin-top: $space-l;
+  }
+
+  &__action {
+    padding-left: $space-xxs;
+    margin-left: auto;
+  }
+}

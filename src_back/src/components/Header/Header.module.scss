@@ -1,0 +1,17 @@
+@import "styles/variables.scss";
+
+.header {
+  height: $header-height;
+  background-color: $color-white;
+  border-bottom: 2px solid #f3f3f3;
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.navbar {
+  display: flex;
+  column-gap: 24px;
+}
