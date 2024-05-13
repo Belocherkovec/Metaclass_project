@@ -1,8 +1,8 @@
-# Hello! This is my homework on Metaclass react course.
+# Стартовая сборка для любого react приложения!.
 
-A small online store written in React with Typescript
+## Доработать:
 
-## Usage:
+**1. Добавить es-lint, prettier** \
+**2. Немного переделать стартовый шаблон: App, favicon и все такое** \
+**3. Доработать описание ну и в целом все красиво раскидать!** \
 
-**1. install deps: `yarn`** \
-**2. start project: `yarn dev`**
