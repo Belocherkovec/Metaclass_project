@@ -40,7 +40,6 @@ const getSettingsForStyles = (withModules = false) => {
             // added modules in project
             modules: {
               localIdentName: !isProd ? '[path][name]__[local]' : '[hash:base64]',
-              namedExport: false,
             },
           },
         },
@@ -66,15 +65,13 @@ const getSettingsForStyles = (withModules = false) => {
 export default {
   entry: path.join(srcPath, 'index.tsx'),
   target: !isProd ? 'web' : 'browserslist',
+  devtool: isProd ? 'hidden-source-map' : 'eval-source-map',
   output: {
     path: buildPath,
     filename: 'bundle.js',
   },
   mode: 'development',
   plugins: [
-    new webpack.ProvidePlugin({
-      React: 'react',
-    }),
     new HtmlWebpackPlugin({
       template: path.resolve(publicPath, 'index.html'), // путь до нашего шаблона
     }),
@@ -116,7 +113,6 @@ export default {
     ],
   },
   devServer: {
-    host: '127.0.0.1', // server host
     port: 3001, // server port
     watchFiles: [path.join(srcPath, '/**/*')], // without this params, hot not working
     hot: true, // autoupdate
