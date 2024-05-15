@@ -29,7 +29,7 @@ const Products = () => {
   const [searchStr, setSearchStr] = useState('');
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
-  const [selectValue] = useState<string>(selectOptions['1']);
+  const [selectValue, setSelectValue] = useState<string>(selectOptions['1']);
 
   useEffect(() => {
     // set search str

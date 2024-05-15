@@ -14,7 +14,7 @@ const Select: React.FC<SelectProps> = ({ className, options, value }) => {
       <p>{value}</p>
       <div>
         {Object.entries(options).map(([key, value]) => (
-          <div key={value + key}>{value}</div>
+          <button key={value + key}>{value}</button>
         ))}
       </div>
     </div>
