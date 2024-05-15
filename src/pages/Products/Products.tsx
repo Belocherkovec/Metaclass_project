@@ -11,6 +11,14 @@ import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
 import { observer } from 'mobx-react-lite';
 import productStore from 'store/ProductStore';
+import Select from 'components/Select';
+
+const selectOptions = {
+  1: 'Nikolai',
+  2: 'Denis',
+  3: 'Alina',
+  4: 'Valentin',
+};
 
 const Products = () => {
   const limitPerPage = 9;
@@ -20,6 +28,8 @@ const Products = () => {
   const [page, setPage] = useState(1);
   const [searchStr, setSearchStr] = useState('');
   const [filterValues, setFilterValues] = useState<Option[]>([]);
+
+  const [selectValue] = useState<string>(selectOptions['1']);
 
   useEffect(() => {
     // set search str
@@ -96,6 +106,7 @@ const Products = () => {
         }
         className={styles.filter}
       />
+      <Select options={selectOptions} value={selectValue} />
       <div className={styles.products__info}>
         <Text tag="h2" className={styles.total}>
           Total Product
