@@ -1,4 +1,4 @@
-import path from 'path';
+const path = require('path');
 
 module.exports = {
   root: true,
@@ -61,4 +61,12 @@ module.exports = {
       version: 'detect',
     },
   },
+  overrides: [
+    {
+      files: ['*.tsx'], // применяется к файлам с расширением .tsx
+      rules: {
+        'react/prop-types': 'off', // отключаем проверку PropTypes для файлов .tsx
+      },
+    },
+  ],
 };

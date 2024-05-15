@@ -1,5 +1,5 @@
-import Loader from 'components/Loader';
 import cn from 'classnames';
+import Loader from 'components/Loader';
 import Text from 'components/Text';
 import styles from './button.module.scss';
 

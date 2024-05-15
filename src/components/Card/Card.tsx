@@ -1,7 +1,7 @@
 import cn from 'classnames';
-import styles from './card.module.scss';
-import Text from 'components/Text';
 import Image from 'components/Image';
+import Text from 'components/Text';
+import styles from './card.module.scss';
 
 export type CardProps = {
   /** Дополнительный classname */

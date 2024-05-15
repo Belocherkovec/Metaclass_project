@@ -1,5 +1,5 @@
-import SpinnerIcon from 'components/icons/SpinnerIcon';
 import cn from 'classnames';
+import SpinnerIcon from 'components/icons/SpinnerIcon';
 import styles from './loader.module.scss';
 
 export type LoaderProps = {

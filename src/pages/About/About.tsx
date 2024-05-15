@@ -33,7 +33,7 @@ const About = () => {
       <Text view="p-20" color="secondary" className={styles.secondary_text}>
         With its fusion of React technology and Platzi Fake Store integration, Lalasia E-commerce sets itself apart as a
         dynamic and trustworthy online marketplace, catering to the needs and preferences of modern consumers. Whether
-        it's exploring new trends or making essential purchases, users can rely on Lalasia E-commerce to deliver a
+        it&apos;s exploring new trends or making essential purchases, users can rely on Lalasia E-commerce to deliver a
         seamless and enjoyable shopping journey.
       </Text>
     </section>

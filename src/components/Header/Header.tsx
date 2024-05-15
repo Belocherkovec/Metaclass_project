@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
 
 import Logo from 'components/Logo';
-import Navigation from './components/Navigation';
-import User from 'components/icons/UserIcon';
+import PageContent from 'components/PageContent';
 import Bag from 'components/icons/BagIcon';
+import User from 'components/icons/UserIcon';
+import Navigation from './components/Navigation';
 
 import styles from './Header.module.scss';
-import PageContent from 'components/PageContent';
 
 const Header = () => {
   return (

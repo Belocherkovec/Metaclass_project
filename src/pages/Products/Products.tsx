@@ -1,17 +1,17 @@
-import Text from 'components/Text';
-import styles from './Products.module.scss';
-import Input from 'components/Input';
+import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import Button from 'components/Button';
-import Api from 'config/Api';
-import Card from 'components/Card';
 import { Link, useSearchParams } from 'react-router-dom';
-import { ICategory } from 'entities/category/types';
+import Button from 'components/Button';
+import Card from 'components/Card';
+import Input from 'components/Input';
 import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
-import { observer } from 'mobx-react-lite';
-import productStore from 'store/ProductStore';
 import Select from 'components/Select';
+import Text from 'components/Text';
+import Api from 'config/Api';
+import { ICategory } from 'entities/category/types';
+import productStore from 'store/ProductStore';
+import styles from './Products.module.scss';
 
 const selectOptions = {
   1: 'Nikolai',

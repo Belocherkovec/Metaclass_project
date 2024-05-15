@@ -1,11 +1,11 @@
-import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import cn from 'classnames';
-import styles from './pagination.module.scss';
 import { observer } from 'mobx-react-lite';
-import PaginationStore from 'store/PaginationStore';
 import { useEffect } from 'react';
-import { useLocalStore } from 'utils/useLocalStore';
 import { useSearchParams } from 'react-router-dom';
+import ArrowRightIcon from 'components/icons/ArrowRightIcon';
+import PaginationStore from 'store/PaginationStore';
+import { useLocalStore } from 'utils/useLocalStore';
+import styles from './pagination.module.scss';
 
 export type PaginationProps = {
   className?: string;

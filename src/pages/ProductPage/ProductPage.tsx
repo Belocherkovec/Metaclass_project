@@ -1,14 +1,14 @@
-import { useParams, Link } from 'react-router-dom';
-import { IProduct } from 'entities/product/types.ts';
 import { useState, useEffect } from 'react';
-import Api from 'config/Api';
-import { routerUrls } from 'config/Routes';
+import { useParams, Link } from 'react-router-dom';
 
-import ArrowRightIcon from 'components/icons/ArrowRightIcon';
-import Text from 'components/Text';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Image from 'components/Image';
+import Text from 'components/Text';
+import ArrowRightIcon from 'components/icons/ArrowRightIcon';
+import Api from 'config/Api';
+import { routerUrls } from 'config/Routes';
+import { IProduct } from 'entities/product/types.ts';
 
 import styles from './productPage.module.scss';
 

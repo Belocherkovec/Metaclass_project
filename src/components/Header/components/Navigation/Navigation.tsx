@@ -1,5 +1,5 @@
-import styles from './Navigation.module.scss';
 import RouteList from 'config/RouteList';
+import styles from './Navigation.module.scss';
 
 const Navigation = () => {
   return (

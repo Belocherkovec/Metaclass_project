@@ -7,7 +7,7 @@ export interface ServerConfig {
 
 // Определяем типы для параметров urlParams и queryParams
 type UrlParams = string[];
-type QueryParams = Record<string, any>;
+type QueryParams = Record<string, string>;
 
 type GetMethod = (url: string, urlParams?: UrlParams, queryParams?: QueryParams) => Promise<AxiosResponse>;
 

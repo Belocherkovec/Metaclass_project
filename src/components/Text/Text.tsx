@@ -1,5 +1,5 @@
-import styles from './Text.module.scss';
 import cn from 'classnames';
+import styles from './Text.module.scss';
 
 export type TextProps = {
   /** Дополнительный класс */

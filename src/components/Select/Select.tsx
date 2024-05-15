@@ -1,5 +1,5 @@
-import styles from './select.module.scss';
 import cn from 'classnames';
+import styles from './select.module.scss';
 
 export type SelectProps = {
   className?: string;

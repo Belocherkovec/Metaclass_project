@@ -1,9 +1,9 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import styles from './multiDropDown.module.scss';
 import cn from 'classnames';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Input from 'components/Input';
-import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import Text from 'components/Text';
+import ArrowDownIcon from 'components/icons/ArrowDownIcon';
+import styles from './multiDropDown.module.scss';
 
 export type Option = {
   id: number;

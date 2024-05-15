@@ -1,10 +1,9 @@
 import path from 'path';
-import webpack from 'webpack';
 import { fileURLToPath } from 'url';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import TsCheckerPlugin from 'fork-ts-checker-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import tsconfig from './tsconfig.json' assert { type: 'json' };
 
 // https://flaviocopes.com/fix-dirname-not-defined-es-module-scope/

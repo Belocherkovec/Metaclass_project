@@ -1,5 +1,5 @@
-import { forwardRef, useCallback } from 'react';
 import cn from 'classnames';
+import { forwardRef, useCallback } from 'react';
 
 import styles from './input.module.scss';
 
@@ -39,4 +39,5 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   },
 );
 
+Input.displayName = 'Input'; // Добавление displayName к компоненту
 export default Input;

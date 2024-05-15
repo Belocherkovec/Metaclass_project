@@ -1,6 +1,6 @@
-import { IProduct } from 'entities/product/types.ts';
 import { action, computed, makeObservable, observable } from 'mobx';
 import Api, { QueryParams } from 'config/Api';
+import { IProduct } from 'entities/product/types.ts';
 
 type PrivateFields = '_products' | '_total';
 
@@ -44,7 +44,6 @@ class ProductStore {
     }
     try {
       const res = await Api.getProducts([], queryParams);
-      console.log(res.data, res.data.length);
       this._total = res.data.length;
     } catch (error) {
       console.error('Error on get total:', error);

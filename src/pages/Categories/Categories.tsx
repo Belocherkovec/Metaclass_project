@@ -1,9 +1,9 @@
-import Text from 'components/Text';
-import styles from './categories.module.scss';
 import { useEffect, useState } from 'react';
-import Api from 'config/Api';
 import Card from 'components/Card';
+import Text from 'components/Text';
+import Api from 'config/Api';
 import { ICategory } from 'entities/category/types.ts';
+import styles from './categories.module.scss';
 
 const Categories = () => {
   const [data, setData] = useState<ICategory[]>([]);
