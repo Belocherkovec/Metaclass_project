@@ -39,15 +39,15 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({ className, options, value
   };
 
   useEffect(() => {
-    const hadlerClick = (e: MouseEvent) => {
+    const handlerClick = (e: MouseEvent) => {
       if (!wrapperRef.current?.contains(e.target as HTMLElement)) {
         setIsOpened(false);
       }
     };
 
-    window.addEventListener('click', hadlerClick);
+    window.addEventListener('click', handlerClick);
     return () => {
-      window.removeEventListener('click', hadlerClick);
+      window.removeEventListener('click', handlerClick);
     };
   }, []);
 

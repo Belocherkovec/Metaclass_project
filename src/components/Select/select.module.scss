@@ -1,3 +1,42 @@
+@import "styles/variables.scss";
+
 .select {
-  font-size: 20px;
+  position: relative;
+  &__value {
+    background-color: $color-white;
+    padding: 14px 12px;
+    user-select: none;
+    border: 1px solid transparent;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 8px;
+  }
+  &__value_empty {
+    color: $color-secondary;
+  }
+  &__value_opened {
+    border: 1px solid $color-accent;
+  }
+  &__options {
+    position: absolute;
+    top: calc(100% + 8px);
+    width: 100%;
+    background-color: $color-white;
+    box-shadow: $shadow;
+    display: flex;
+    flex-direction: column;
+  }
+  &__option {
+    border: none;
+    background-color: transparent;
+    padding: 14px 12px;
+    text-align: left;
+    cursor: pointer;
+    &:hover {
+      color: $color-light-grey;
+    }
+    &_selected {
+      color: $color-accent;
+    }
+  }
 }

@@ -29,7 +29,7 @@ const Products = () => {
   const [searchStr, setSearchStr] = useState('');
   const [filterValues, setFilterValues] = useState<Option[]>([]);
 
-  const [selectValue, setSelectValue] = useState<string>(selectOptions['1']);
+  const [selectValue, setSelectValue] = useState<string>('');
 
   useEffect(() => {
     // set search str
@@ -70,14 +70,14 @@ const Products = () => {
   }
 
   function filterChangeHandler(newValue: Option[]) {
-    setFilterValues(newValue);
-    if (newValue.length) {
-      searchParams.set('categories', newValue.map((o) => o.id).join(','));
-    } else {
-      searchParams.delete('categories');
-    }
-    setSearchParams(searchParams);
-    setPage(1);
+    // setFilterValues(newValue);
+    // if (newValue.length) {
+    //   searchParams.set('categories', newValue.map((o) => o.id).join(','));
+    // } else {
+    //   searchParams.delete('categories');
+    // }
+    // setSearchParams(searchParams);
+    // setPage(1);
   }
 
   useEffect(() => {
@@ -97,16 +97,7 @@ const Products = () => {
         <Input value={searchStr} onChange={setSearchStr} placeholder="Search product" />
         <Button onClick={searchSumbitHandler}>Find now</Button>
       </div>
-      <MultiDropdown
-        options={filterOptions}
-        value={filterValues}
-        onChange={filterChangeHandler}
-        getTitle={(values: Option[]) =>
-          values.length === 0 ? 'Select category' : values.map(({ value }) => value).join(', ')
-        }
-        className={styles.filter}
-      />
-      <Select options={selectOptions} value={selectValue} />
+      <Select options={selectOptions} value={selectValue} className={styles.filter} onChange={setSelectValue} />
       <div className={styles.products__info}>
         <Text tag="h2" className={styles.total}>
           Total Product
