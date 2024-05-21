@@ -4,49 +4,28 @@ import { Link, useSearchParams } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Input from 'components/Input';
-import MultiDropdown, { Option } from 'components/MultiDropDown';
 import Pagination from 'components/Pagination';
 import Select from 'components/Select';
 import Text from 'components/Text';
-import Api from 'config/Api';
-import { ICategory } from 'entities/category/types';
 import productStore from 'store/ProductStore';
 import styles from './Products.module.scss';
-
-const selectOptions = {
-  1: 'Nikolai',
-  2: 'Denis',
-  3: 'Alina',
-  4: 'Valentin',
-};
 
 const Products = () => {
   const limitPerPage = 9;
   const [searchParams, setSearchParams] = useSearchParams();
-  const [filterOptions, setFilterOptions] = useState<Option[]>([]);
+  const [filterOptions, setFilterOptions] = useState<Record<string, string>>({});
 
   const [page, setPage] = useState(1);
   const [searchStr, setSearchStr] = useState('');
-  const [filterValues, setFilterValues] = useState<Option[]>([]);
 
-  const [selectValue, setSelectValue] = useState<string>('');
+  const [selectFilterValue, setSelectFilterValue] = useState<string>('');
 
   useEffect(() => {
-    // set search str
+    productStore.updateCategories().then(() => setFilterOptions(productStore.categoryOptions));
+
+    // set search str and active category
     setSearchStr(searchParams.get('search') || '');
-
-    // get categories
-    Api.getCategories().then((res) => {
-      setFilterOptions(() => {
-        const newState: Option[] = res.data.map((o: ICategory) => ({ id: o.id, key: o.name, value: o.name }));
-
-        // set active categories
-        const categories = searchParams.get('categories')?.split(',');
-        setFilterValues(newState.filter((o) => categories?.includes(o.id.toString())));
-
-        return newState;
-      });
-    });
+    setSelectFilterValue(searchParams.get('category') || '');
 
     update();
 
@@ -54,8 +33,8 @@ const Products = () => {
   }, []);
 
   function update() {
-    productStore.updateTotal({ title: searchStr, categoryId: filterValues[0]?.id });
-    productStore.filterProducts({ limit: limitPerPage, page: page, title: searchStr, categoryId: filterValues[0]?.id });
+    productStore.updateTotal({ title: searchStr, categoryId: selectFilterValue });
+    productStore.filterProducts({ limit: limitPerPage, page: page, title: searchStr, categoryId: selectFilterValue });
   }
 
   function searchSumbitHandler() {
@@ -69,20 +48,20 @@ const Products = () => {
     update();
   }
 
-  function filterChangeHandler(newValue: Option[]) {
-    // setFilterValues(newValue);
-    // if (newValue.length) {
-    //   searchParams.set('categories', newValue.map((o) => o.id).join(','));
-    // } else {
-    //   searchParams.delete('categories');
-    // }
-    // setSearchParams(searchParams);
+  function filterChangeHandler(newValue: string) {
+    setSelectFilterValue(newValue);
+    if (newValue) {
+      searchParams.set('category', newValue);
+    } else {
+      searchParams.delete('category');
+    }
+    setSearchParams(searchParams);
     // setPage(1);
   }
 
   useEffect(() => {
     update();
-  }, [filterValues, page]);
+  }, [selectFilterValue, page]);
 
   return (
     <section className={styles.products}>
@@ -97,7 +76,12 @@ const Products = () => {
         <Input value={searchStr} onChange={setSearchStr} placeholder="Search product" />
         <Button onClick={searchSumbitHandler}>Find now</Button>
       </div>
-      <Select options={selectOptions} value={selectValue} className={styles.filter} onChange={setSelectValue} />
+      <Select
+        options={filterOptions}
+        value={selectFilterValue}
+        className={styles.filter}
+        onChange={filterChangeHandler}
+      />
       <div className={styles.products__info}>
         <Text tag="h2" className={styles.total}>
           Total Product

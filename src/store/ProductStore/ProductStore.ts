@@ -1,36 +1,51 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import Api, { QueryParams } from 'config/Api';
-import { IProduct } from 'entities/product/types.ts';
+import { IProduct } from 'entities/product/types';
+import { ICategory } from 'entities/category/types';
 
-type PrivateFields = '_products' | '_total';
+type PrivateFields = '_products' | '_total' | '_categories';
 
 export interface IProductParams {
   limit?: number;
   page?: number;
   title?: string;
-  categoryId?: number;
+  categoryId?: string;
 }
 
 class ProductStore {
   private _products: IProduct[] = [];
   private _total: number = 1;
+  private _categories: ICategory[] = [];
 
   constructor() {
     makeObservable<ProductStore, PrivateFields>(this, {
       _products: observable,
       _total: observable,
+      _categories: observable,
       updateProducts: action,
+      updateCategories: action,
       filterProducts: action,
       products: computed,
     });
   }
 
   public updateProducts = async (queryParams: QueryParams = {}) => {
+    console.log(queryParams);
     try {
       const res = await Api.getProducts([], queryParams);
+      console.log(res.data);
       this.products = res.data;
     } catch (error) {
       console.error('Error on get products:', error);
+    }
+  };
+
+  public updateCategories = async (queryParams: QueryParams = {}) => {
+    try {
+      const res = await Api.getCategories([], queryParams);
+      this.categories = res.data;
+    } catch (error) {
+      console.error('Error on get categories:', error);
     }
   };
 
@@ -64,7 +79,7 @@ class ProductStore {
       queryParams.title = title;
     }
     if (categoryId) {
-      queryParams.categoryId = categoryId.toString();
+      queryParams.categoryId = categoryId;
     }
 
     await this.updateProducts(queryParams);
@@ -74,12 +89,26 @@ class ProductStore {
     return this._products;
   }
 
+  public get categories(): ICategory[] {
+    return this._categories;
+  }
+
+  public get categoryOptions(): Record<string, string> {
+    const result: Record<string, string> = {};
+    this._categories.forEach((c) => (result[c.id] = c.name));
+    return result;
+  }
+
   public get total(): number {
     return this._total;
   }
 
   public set products(value: IProduct[]) {
     this._products = value;
+  }
+
+  public set categories(value: ICategory[]) {
+    this._categories = value;
   }
 
   public reset() {

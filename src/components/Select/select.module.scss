@@ -17,6 +17,9 @@
   &__value_opened {
     border: 1px solid $color-accent;
   }
+  &__icon {
+    pointer-events: none;
+  }
   &__options {
     position: absolute;
     top: calc(100% + 8px);

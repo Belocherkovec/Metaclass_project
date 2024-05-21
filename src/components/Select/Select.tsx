@@ -24,6 +24,7 @@ const Select: React.FC<SelectProps> = ({ className, options, value, onChange }) 
       onChange('');
     } else {
       onChange(targetValue);
+      setIsOpen.close();
     }
   };
 
@@ -49,16 +50,20 @@ const Select: React.FC<SelectProps> = ({ className, options, value, onChange }) 
           (!value || isOpen) && styles.select__value_empty,
         )}
       >
-        {value || 'Select category'}
-        {isOpen ? <CloseIcon color="secondary" /> : <ArrowDownIcon color="secondary" />}
+        {options[value] || 'Select category'}
+        {isOpen ? (
+          <CloseIcon color="secondary" className={styles.select__icon} />
+        ) : (
+          <ArrowDownIcon color="secondary" className={styles.select__icon} />
+        )}
       </div>
       {isOpen && (
         <div className={styles.select__options}>
           {Object.entries(options).map(([key, curValue]) => (
             <button
               key={curValue + key}
-              onClick={() => onChangeHandler(curValue)}
-              className={cn(styles.select__option, curValue === value && styles.select__option_selected)}
+              onClick={() => onChangeHandler(key)}
+              className={cn(styles.select__option, key === value && styles.select__option_selected)}
             >
               {curValue}
             </button>
