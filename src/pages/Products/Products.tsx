@@ -10,7 +10,7 @@ import Text from 'components/Text';
 import productStore from 'store/ProductStore';
 import styles from './Products.module.scss';
 
-const Products = () => {
+const Products = observer(() => {
   const limitPerPage = 9;
   const [searchParams, setSearchParams] = useSearchParams();
   const [filterOptions, setFilterOptions] = useState<Record<string, string>>({});
@@ -21,13 +21,20 @@ const Products = () => {
   const [selectFilterValue, setSelectFilterValue] = useState<string>('');
 
   useEffect(() => {
-    productStore.updateCategories().then(() => setFilterOptions(productStore.categoryOptions));
+    async function init() {
+      await productStore.updateCategories();
+      setFilterOptions(productStore.categoryOptions);
 
-    // set search str and active category
-    setSearchStr(searchParams.get('search') || '');
-    setSelectFilterValue(searchParams.get('category') || '');
+      const search = searchParams.get('search') || '';
+      const category = searchParams.get('category') || '';
 
-    update();
+      setSearchStr(search);
+      setSelectFilterValue(category);
+
+      update();
+    }
+
+    init();
 
     return () => productStore.reset();
   }, []);
@@ -113,6 +120,6 @@ const Products = () => {
       )}
     </section>
   );
-};
+});
 
-export default observer(Products);
+export default Products;

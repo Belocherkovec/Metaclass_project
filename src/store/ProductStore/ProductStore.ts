@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import Api, { QueryParams } from 'config/Api';
-import { IProduct } from 'entities/product/types';
 import { ICategory } from 'entities/category/types';
+import { IProduct } from 'entities/product/types';
 
 type PrivateFields = '_products' | '_total' | '_categories';
 
@@ -29,27 +29,25 @@ class ProductStore {
     });
   }
 
-  public updateProducts = async (queryParams: QueryParams = {}) => {
-    console.log(queryParams);
+  public async updateProducts(queryParams: QueryParams = {}) {
     try {
       const res = await Api.getProducts([], queryParams);
-      console.log(res.data);
       this.products = res.data;
     } catch (error) {
       console.error('Error on get products:', error);
     }
-  };
+  }
 
-  public updateCategories = async (queryParams: QueryParams = {}) => {
+  public async updateCategories(queryParams: QueryParams = {}) {
     try {
       const res = await Api.getCategories([], queryParams);
       this.categories = res.data;
     } catch (error) {
       console.error('Error on get categories:', error);
     }
-  };
+  }
 
-  public updateTotal = async ({ title, categoryId }: IProductParams) => {
+  public async updateTotal({ title, categoryId }: IProductParams) {
     const queryParams: QueryParams = {};
     if (title) {
       queryParams.title = title;
@@ -63,9 +61,9 @@ class ProductStore {
     } catch (error) {
       console.error('Error on get total:', error);
     }
-  };
+  }
 
-  public filterProducts = async ({ limit, page = 1, title, categoryId }: IProductParams) => {
+  public async filterProducts({ limit, page = 1, title, categoryId }: IProductParams) {
     const queryParams: QueryParams = {};
     this.products = [];
 
@@ -83,7 +81,7 @@ class ProductStore {
     }
 
     await this.updateProducts(queryParams);
-  };
+  }
 
   public get products(): IProduct[] {
     return this._products;
