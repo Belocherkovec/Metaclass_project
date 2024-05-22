@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Input from 'components/Input';
@@ -9,10 +9,12 @@ import Select from 'components/Select';
 import Text from 'components/Text';
 import productStore from 'store/ProductStore';
 import styles from './Products.module.scss';
+import { useQueryStore } from 'components/QueryStore';
+
+const limitPerPage = 9;
 
 const Products = observer(() => {
-  const limitPerPage = 9;
-  const [searchParams, setSearchParams] = useSearchParams();
+  const queryStore = useQueryStore();
   const [filterOptions, setFilterOptions] = useState<Record<string, string>>({});
 
   const [page, setPage] = useState(1);
@@ -25,8 +27,8 @@ const Products = observer(() => {
       await productStore.updateCategories();
       setFilterOptions(productStore.categoryOptions);
 
-      const search = searchParams.get('search') || '';
-      const category = searchParams.get('category') || '';
+      const search = queryStore.getQueryParam('search') || '';
+      const category = queryStore.getQueryParam('category') || '';
 
       setSearchStr(search);
       setSelectFilterValue(category);
@@ -45,25 +47,16 @@ const Products = observer(() => {
   }
 
   function searchSumbitHandler() {
-    if (searchStr.length) {
-      searchParams.set('search', searchStr);
-    } else {
-      searchParams.delete('search');
-    }
-    setSearchParams(searchParams);
+    queryStore.setQueryParam('search', searchStr);
     setPage(1);
     update();
   }
 
   function filterChangeHandler(newValue: string) {
     setSelectFilterValue(newValue);
-    if (newValue) {
-      searchParams.set('category', newValue);
-    } else {
-      searchParams.delete('category');
-    }
-    setSearchParams(searchParams);
-    // setPage(1);
+    queryStore.setQueryParam('category', newValue);
+    setPage(1);
+    update();
   }
 
   useEffect(() => {

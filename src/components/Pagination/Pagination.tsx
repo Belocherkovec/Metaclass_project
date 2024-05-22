@@ -1,11 +1,11 @@
 import cn from 'classnames';
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import PaginationStore from 'store/PaginationStore';
 import { useLocalStore } from 'utils/useLocalStore';
 import styles from './pagination.module.scss';
+import queryStore from 'store/QueryStore';
 
 export type PaginationProps = {
   className?: string;
@@ -15,17 +15,15 @@ export type PaginationProps = {
 
 const Pagination: React.FC<PaginationProps> = ({ className, total, onChange }) => {
   const pagination = useLocalStore(() => new PaginationStore());
-  const [searchParams, setSearchParams] = useSearchParams();
 
   // component unmounting
   useEffect(() => {
-    const initialPage = searchParams.get('page');
+    const initialPage = queryStore.getQueryParam('page');
     if (initialPage) {
       pagination.page = +initialPage;
     }
     return () => {
-      searchParams.delete('page');
-      setSearchParams(searchParams);
+      queryStore.setQueryParam('page');
     };
   }, []);
 
@@ -35,8 +33,7 @@ const Pagination: React.FC<PaginationProps> = ({ className, total, onChange }) =
   }, [total]);
 
   useEffect(() => {
-    searchParams.set('page', pagination.page.toString());
-    setSearchParams(searchParams);
+    queryStore.setQueryParam('page', pagination.page.toString());
     if (onChange) {
       onChange(pagination.page);
     }
