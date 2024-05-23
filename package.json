@@ -11,8 +11,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development npx webpack serve --mode=development",
     "build": "cross-env NODE_ENV=production npx webpack --mode=production",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "prettier": "prettier . --write",
     "prettier_single": "prettier $1 --write",
