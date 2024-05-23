@@ -1,10 +1,15 @@
-import { QueryParams } from 'config/Api';
 import { makeObservable, observable, action, computed } from 'mobx';
 import { NavigateFunction, Location as RouterLocation } from 'react-router-dom';
+import { QueryParams } from 'config/Api';
 
 type PrivateFields = '_navigate' | '_location';
+
+interface LocationState {
+  from?: string;
+  data?: number;
+}
 interface Location extends RouterLocation {
-  state: any;
+  state: LocationState;
 }
 
 class QueryStore {
