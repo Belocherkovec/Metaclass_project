@@ -26,7 +26,10 @@ const ProductPage = () => {
 
   useEffect(() => {
     Api.getProducts([id]).then((res) => {
-      setData(res.data);
+      setData({
+        ...res.data,
+        images: res.data.images.map((i: string) => i.replace(/^\["|"\]$/g, '').replace(/^"|"$/g, '')),
+      });
     });
     Api.getProducts().then((res) => {
       setRelatedData(getRelated(res.data, 3));
@@ -47,7 +50,7 @@ const ProductPage = () => {
       )}
       {data && (
         <div className={styles.info}>
-          <Image className={styles.image} src={data.images[0].replace(/^\["|"\]$/g, '')} alt="product card" />
+          <Image className={styles.image} src={data.images[0]} alt="product card" />
           <div className={styles.description}>
             <Text tag="h1" view="title">
               {data.title}

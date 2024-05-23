@@ -31,8 +31,6 @@
   display: flex;
   column-gap: 24px;
   @media (max-width: 600px) {
-    & {
-      column-gap: 12px;
-    }
+    column-gap: 12px;
   }
 }

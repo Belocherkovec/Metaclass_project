@@ -27,4 +27,13 @@
       }
     }
   }
+  @media (max-width: 600px) {
+    > a {
+      &.active {
+        &::after {
+          top: 35px;
+        }
+      }
+    }
+  }
 }
