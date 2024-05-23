@@ -1,4 +1,4 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom';
+import { Navigate, createBrowserRouter, createHashRouter } from 'react-router-dom';
 import App from 'App/';
 import About from 'pages/About';
 import Categories from 'pages/Categories';
