@@ -12,13 +12,13 @@ const Header = () => {
   return (
     <header className={styles.header}>
       <PageContent className={styles.content}>
-        <Link to="/">
+        <Link to="/" className={styles.header__link}>
           <Logo />
         </Link>
-        <Navigation />
+        <Navigation className={styles.header__nav} />
         <div className={styles.navbar}>
-          <Bag />
-          <User />
+          <Bag className={styles.header__icon} />
+          <User className={styles.header__icon} />
         </div>
       </PageContent>
     </header>

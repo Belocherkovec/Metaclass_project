@@ -35,7 +35,12 @@ class ProductStore {
     this._isLoading = true;
     try {
       const res = await Api.getProducts([], queryParams);
-      this.products = res.data;
+      let data: IProduct[] = res.data;
+      data = data.map((p) => ({
+        ...p,
+        images: p.images.map((i) => i.replace(/^\["|"\]$/g, '').replace(/^"|"$/g, '')),
+      }));
+      this.products = data;
     } catch (error) {
       console.error('Error on get products:', error);
     } finally {

@@ -9,9 +9,30 @@
     align-items: center;
     justify-content: space-between;
   }
+  @media (max-width: 600px) {
+    .content {
+      column-gap: 12px;
+    }
+    &__link {
+      width: 80px;
+    }
+    &__nav {
+      font-size: 0.8em;
+      column-gap: 20px;
+    }
+    &__icon {
+      width: 24px;
+      height: 24px;
+    }
+  }
 }
 
 .navbar {
   display: flex;
   column-gap: 24px;
+  @media (max-width: 600px) {
+    & {
+      column-gap: 12px;
+    }
+  }
 }

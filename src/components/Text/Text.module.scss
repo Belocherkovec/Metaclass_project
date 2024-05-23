@@ -6,6 +6,10 @@
   font-size: 44px;
   line-height: 48px;
   font-weight: bold;
+  @media (max-width: 600px) {
+    font-size: 30px;
+    line-height: 34px;
+  }
 }
 .button {
   font-size: 18px;
@@ -14,6 +18,10 @@
 .p-20 {
   font-size: 20px;
   line-height: 24px;
+  @media (max-width: 600px) {
+    font-size: 16px;
+    line-height: 20px;
+  }
 }
 .p-18 {
   font-size: 18px;

@@ -1,6 +1,15 @@
+import styles from './logo.module.scss';
+
 const Logo = () => {
   return (
-    <svg width="131" height="42" viewBox="0 0 131 42" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="131"
+      height="42"
+      viewBox="0 0 131 42"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={styles.logo}
+    >
       <g clipPath="url(#clip0_502_629)">
         <path d="M42 0H0V42H42V0Z" fill="white" />
         <path

@@ -41,22 +41,22 @@ const Select: React.FC<SelectProps> = ({ className, options, value, onChange }) 
   }, []);
 
   return (
-    <div className={cn(className, styles.select)} ref={selectRef}>
-      <div
-        onClick={onClickHandler}
-        className={cn(
-          styles.select__value,
-          isOpen && styles.select__value_opened,
-          (!value || isOpen) && styles.select__value_empty,
-        )}
-      >
-        {options[value] || 'Select category'}
-        {isOpen ? (
-          <CloseIcon color="secondary" className={styles.select__icon} />
-        ) : (
-          <ArrowDownIcon color="secondary" className={styles.select__icon} />
-        )}
-      </div>
+    <div
+      className={cn(
+        className,
+        styles.select,
+        isOpen && styles.select_opened,
+        (!value || isOpen) && styles.select_empty,
+      )}
+      ref={selectRef}
+      onClick={onClickHandler}
+    >
+      <div>{options[value] || 'Select category'}</div>
+      {isOpen ? (
+        <CloseIcon color="secondary" className={styles.select__icon} />
+      ) : (
+        <ArrowDownIcon color="secondary" className={styles.select__icon} />
+      )}
       {isOpen && (
         <div className={styles.select__options}>
           {Object.entries(options).map(([key, curValue]) => (

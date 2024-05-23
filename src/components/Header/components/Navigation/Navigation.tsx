@@ -1,9 +1,14 @@
+import cn from 'classnames';
 import RouteList from 'config/RouteList';
 import styles from './Navigation.module.scss';
 
-const Navigation = () => {
+export type NavigationProps = {
+  className?: string;
+};
+
+const Navigation: React.FC<NavigationProps> = ({ className }) => {
   return (
-    <nav className={`${styles.navigation}`}>
+    <nav className={cn(styles.navigation, className)}>
       <RouteList activeClass={styles.active} />
     </nav>
   );

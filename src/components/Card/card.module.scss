@@ -47,4 +47,16 @@
     padding-left: $space-xxs;
     margin-left: auto;
   }
+
+  @media (max-width: 600px) {
+    &__image {
+      height: 240px;
+    }
+    &__body {
+      padding: $space-xl $space-xs;
+    }
+    &__action > button > span {
+      font-size: 0.8em;
+    }
+  }
 }

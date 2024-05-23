@@ -1,9 +1,13 @@
 @import "styles/variables.scss";
 
 .content {
-  width: 1240px;
+  max-width: 1240px;
   margin: 0 auto;
   height: 100%;
+  padding: 15px;
+  @media (max-width: 600px) {
+    max-width: 100%;
+  }
 }
 
 .wrapper {
