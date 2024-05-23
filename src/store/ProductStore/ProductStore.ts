@@ -3,7 +3,7 @@ import Api, { QueryParams } from 'config/Api';
 import { ICategory } from 'entities/category/types';
 import { IProduct } from 'entities/product/types';
 
-type PrivateFields = '_products' | '_total' | '_categories';
+type PrivateFields = '_products' | '_total' | '_categories' | '_isLoading';
 
 export interface IProductParams {
   limit?: number;
@@ -13,6 +13,7 @@ export interface IProductParams {
 }
 
 class ProductStore {
+  private _isLoading: boolean = false;
   private _products: IProduct[] = [];
   private _total: number = 1;
   private _categories: ICategory[] = [];
@@ -22,6 +23,7 @@ class ProductStore {
       _products: observable,
       _total: observable,
       _categories: observable,
+      _isLoading: observable,
       updateProducts: action,
       updateCategories: action,
       filterProducts: action,
@@ -30,11 +32,14 @@ class ProductStore {
   }
 
   public async updateProducts(queryParams: QueryParams = {}) {
+    this._isLoading = true;
     try {
       const res = await Api.getProducts([], queryParams);
       this.products = res.data;
     } catch (error) {
       console.error('Error on get products:', error);
+    } finally {
+      this._isLoading = false;
     }
   }
 
@@ -85,6 +90,10 @@ class ProductStore {
 
   public get products(): IProduct[] {
     return this._products;
+  }
+
+  public get isLoading(): boolean {
+    return this._isLoading;
   }
 
   public get categories(): ICategory[] {

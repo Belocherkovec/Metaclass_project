@@ -1,0 +1,34 @@
+@import "styles/variables.scss";
+
+.scroll {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  border: 1px solid transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 9;
+  background-color: $color-accent;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in;
+
+  &__icon {
+    transform: rotate(180deg);
+    color: white;
+  }
+
+  &:hover {
+    background-color: $color-accent-hover;
+  }
+
+  &:active {
+    background-color: $color-accent-active;
+  }
+
+  &_hide {
+    display: none;
+  }
+}

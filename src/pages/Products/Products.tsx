@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Input from 'components/Input';
+import Loader from 'components/Loader';
 import Pagination from 'components/Pagination';
+import { useQueryStore } from 'components/QueryStore';
 import Select from 'components/Select';
 import Text from 'components/Text';
 import productStore from 'store/ProductStore';
 import styles from './Products.module.scss';
-import { useQueryStore } from 'components/QueryStore';
 
 const limitPerPage = 9;
 
@@ -90,26 +91,35 @@ const Products = observer(() => {
           {productStore.products.length || 0}
         </Text>
       </div>
-      <div className={styles.products__list}>
-        {productStore.products.map((e) => (
-          <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
-            <Card
-              image={e.images[0]}
-              captionSlot={e.category.name}
-              title={e.title}
-              subtitle={e.description}
-              contentSlot={`$${e.price}`}
-              actionSlot={<Button>Add to card</Button>}
+      {productStore.isLoading && (
+        <div className={styles.loader}>
+          <Loader />
+        </div>
+      )}
+      {!productStore.isLoading && (
+        <>
+          <div className={styles.products__list}>
+            {productStore.products.map((e) => (
+              <Link to={`/products/${e.id}`} key={e.id} className={styles.products__card}>
+                <Card
+                  image={e.images[0]}
+                  captionSlot={e.category.name}
+                  title={e.title}
+                  subtitle={e.description}
+                  contentSlot={`$${e.price}`}
+                  actionSlot={<Button>Add to card</Button>}
+                />
+              </Link>
+            ))}
+          </div>
+          {productStore.total > limitPerPage && (
+            <Pagination
+              className={styles.pagination}
+              total={Math.ceil(productStore.total / limitPerPage)}
+              onChange={setPage}
             />
-          </Link>
-        ))}
-      </div>
-      {productStore.total > limitPerPage && (
-        <Pagination
-          className={styles.pagination}
-          total={Math.ceil(productStore.total / limitPerPage)}
-          onChange={setPage}
-        />
+          )}
+        </>
       )}
     </section>
   );

@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import PaginationStore from 'store/PaginationStore';
+import queryStore from 'store/QueryStore';
 import { useLocalStore } from 'utils/useLocalStore';
 import styles from './pagination.module.scss';
-import queryStore from 'store/QueryStore';
 
 export type PaginationProps = {
   className?: string;
@@ -16,15 +16,11 @@ export type PaginationProps = {
 const Pagination: React.FC<PaginationProps> = ({ className, total, onChange }) => {
   const pagination = useLocalStore(() => new PaginationStore());
 
-  // component unmounting
   useEffect(() => {
     const initialPage = queryStore.getQueryParam('page');
     if (initialPage) {
       pagination.page = +initialPage;
     }
-    return () => {
-      queryStore.setQueryParam('page');
-    };
   }, []);
 
   // total change watch

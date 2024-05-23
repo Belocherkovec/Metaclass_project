@@ -68,6 +68,7 @@ export default {
   output: {
     path: buildPath,
     filename: 'bundle.js',
+    publicPath: '/', // Важно для правильного разрешения путей
   },
   mode: 'development',
   plugins: [
@@ -113,6 +114,9 @@ export default {
   },
   devServer: {
     port: 3001, // server port
+    static: {
+      directory: publicPath, // Директория для статических файлов
+    },
     watchFiles: [path.join(srcPath, '/**/*')], // without this params, hot not working
     hot: true, // autoupdate
     historyApiFallback: true,

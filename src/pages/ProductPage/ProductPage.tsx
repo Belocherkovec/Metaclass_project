@@ -4,6 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Image from 'components/Image';
+import Loader from 'components/Loader';
 import Text from 'components/Text';
 import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import Api from 'config/Api';
@@ -39,6 +40,11 @@ const ProductPage = () => {
         <ArrowRightIcon />
         <Text view="p-20">Назад</Text>
       </Link>
+      {!data && (
+        <div className={styles.loader}>
+          <Loader />
+        </div>
+      )}
       {data && (
         <div className={styles.info}>
           <Image className={styles.image} src={data.images[0].replace(/^\["|"\]$/g, '')} alt="product card" />
