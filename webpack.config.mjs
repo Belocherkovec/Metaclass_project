@@ -1,6 +1,7 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import TsCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -68,12 +69,23 @@ export default {
   output: {
     path: buildPath,
     filename: 'bundle.js',
-    publicPath: '/', // Важно для правильного разрешения путей
+    publicPath: '', // Важно для правильного разрешения путей
   },
   mode: 'development',
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(publicPath, 'index.html'), // путь до нашего шаблона
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'public',
+          to: '',
+          globOptions: {
+            ignore: ['**/index.html'], // Исключить index.html из копирования
+          },
+        },
+      ],
     }),
     !isProd && new ReactRefreshWebpackPlugin(),
     isProd &&

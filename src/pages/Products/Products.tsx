@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Input from 'components/Input';
 import Loader from 'components/Loader';
 import Pagination from 'components/Pagination';
-import { useQueryStore } from 'components/QueryStore';
+// import { useQueryStore } from 'components/QueryStore';
 import Select from 'components/Select';
 import Text from 'components/Text';
 import productStore from 'store/ProductStore';
@@ -15,7 +15,7 @@ import styles from './Products.module.scss';
 const limitPerPage = 9;
 
 const Products = observer(() => {
-  const queryStore = useQueryStore();
+  const [queryParams, setQueryParams] = useSearchParams();
   const [filterOptions, setFilterOptions] = useState<Record<string, string>>({});
 
   const [page, setPage] = useState(1);
@@ -28,8 +28,8 @@ const Products = observer(() => {
       await productStore.updateCategories();
       setFilterOptions(productStore.categoryOptions);
 
-      const search = queryStore.getQueryParam('search') || '';
-      const category = queryStore.getQueryParam('category') || '';
+      const search = queryParams.get('search') || '';
+      const category = queryParams.get('category') || '';
 
       setSearchStr(search);
       setSelectFilterValue(category);
@@ -48,14 +48,25 @@ const Products = observer(() => {
   }
 
   function searchSumbitHandler() {
-    queryStore.setQueryParam('search', searchStr);
+    if (searchStr) {
+      queryParams.set('search', searchStr);
+    } else {
+      queryParams.delete('search');
+    }
+    setQueryParams(queryParams);
     setPage(1);
     update();
   }
 
   function filterChangeHandler(newValue: string) {
     setSelectFilterValue(newValue);
-    queryStore.setQueryParam('category', newValue);
+    console.log(newValue);
+    if (newValue) {
+      queryParams.set('category', newValue);
+    } else {
+      queryParams.delete('category');
+    }
+    setQueryParams(queryParams);
     setPage(1);
     update();
   }
