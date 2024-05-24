@@ -7,6 +7,14 @@
   }
 }
 
+.swiper {
+  .swiper-button-prev {
+    &::after {
+      color: white;
+    }
+  }
+}
+
 .link {
   display: flex;
   align-items: center;
@@ -36,6 +44,7 @@
 }
 
 .description {
+  flex-basis: 150%;
   & > * {
     margin-bottom: 24px;
   }

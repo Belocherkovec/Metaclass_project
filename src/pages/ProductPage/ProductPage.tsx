@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-
+import { Navigation } from 'swiper/modules';
+import { Swiper, SwiperSlide } from 'swiper/react';
 import Button from 'components/Button';
 import Card from 'components/Card';
 import Image from 'components/Image';
@@ -10,7 +11,9 @@ import ArrowRightIcon from 'components/icons/ArrowRightIcon';
 import Api from 'config/Api';
 import { routerUrls } from 'config/Routes';
 import { IProduct } from 'entities/product/types.ts';
-
+import 'swiper/css';
+import 'swiper/css/navigation';
+import './styles.scss';
 import styles from './productPage.module.scss';
 
 function getRelated(data: IProduct[], relatedCount: number) {
@@ -50,7 +53,13 @@ const ProductPage = () => {
       )}
       {data && (
         <div className={styles.info}>
-          <Image className={styles.image} src={data.images[0]} alt="product card" />
+          <Swiper navigation={true} modules={[Navigation]} slidesPerView={1} className={styles.swiper}>
+            {data.images.map((img, idx) => (
+              <SwiperSlide key={idx}>
+                <Image src={img} alt="product card" className={styles.image} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
           <div className={styles.description}>
             <Text tag="h1" view="title">
               {data.title}
